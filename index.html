@@ -799,6 +799,9 @@
           <div>
             <button id="tile-download-btn" class="btn" style="font-size:9px;padding:8px 16px;">Download Current View</button>
           </div>
+          <div>
+            <button id="tile-style-btn" class="btn btn--outline" style="font-size:9px;padding:8px 16px;min-width:90px;">&#x2600; Light</button>
+          </div>
           <div id="tile-estimate" style="font-size:12px;color:var(--text-muted);"></div>
         </div>
 
@@ -918,8 +921,12 @@
   const minZoomSel = document.getElementById('tile-minzoom');
   const maxZoomSel = document.getElementById('tile-maxzoom');
   const downloadBtn = document.getElementById('tile-download-btn');
+  const styleBtn = document.getElementById('tile-style-btn');
   const estimateEl = document.getElementById('tile-estimate');
   const progressEl = document.getElementById('tile-progress');
+
+  var tileStyle = 'light';
+  var lightLayer, darkLayer;
 
   // Init map
   const map = L.map(mapEl, {
@@ -928,9 +935,27 @@
     zoomControl: true,
     attributionControl: false,
   });
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  lightLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
   }).addTo(map);
+  darkLayer = L.tileLayer('https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+  });
+
+  // Style toggle
+  styleBtn.addEventListener('click', function() {
+    if (tileStyle === 'light') {
+      tileStyle = 'dark';
+      map.removeLayer(lightLayer);
+      map.addLayer(darkLayer);
+      styleBtn.innerHTML = '&#x1F319; Dark';
+    } else {
+      tileStyle = 'light';
+      map.removeLayer(darkLayer);
+      map.addLayer(lightLayer);
+      styleBtn.innerHTML = '&#x2600; Light';
+    }
+  });
 
   // Update estimate on map move or zoom change
   map.on('moveend', updateEstimate);
@@ -1000,7 +1025,7 @@
     var poolSize = 12;
 
     function worker(t) {
-      var url = proxyBase + '?z=' + t.z + '&x=' + t.x + '&y=' + t.y;
+      var url = proxyBase + '?z=' + t.z + '&x=' + t.x + '&y=' + t.y + '&style=' + tileStyle;
       fetch(url).then(function(resp) {
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         return resp.blob();

@@ -29,6 +29,10 @@ class SiteHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_error(400, "Missing z, x, y params")
                 return
             tile_url = f"https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+            # Dark tiles from CartoDB
+            if params.get("style", [None])[0] == "dark":
+                sub = "a" if (int(x) + int(y)) % 2 == 0 else "b"
+                tile_url = f"https://{sub}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
             req = urllib.request.Request(tile_url, headers={
                 "User-Agent": "SlopOSMapTool/1.0",
             })
