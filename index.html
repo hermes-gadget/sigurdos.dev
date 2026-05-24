@@ -365,7 +365,7 @@
   <section class="hero">
     <div class="container">
       <h1>SLOPOS</h1>
-      <p class="version-tag">v beta-0.1.31</p>
+      <p class="version-tag" id="version-tag">v <span id="version-text">loading...</span></p>
       <p class="subtitle">
         A fully open source firmware that turns the LilyGo T-Deck into a
         portable mesh communication device. Chat across your network, navigate
@@ -722,5 +722,17 @@
     </div>
   </footer>
 
+<script>
+// Auto-update version tag from GitHub releases
+(async function() {
+  try {
+    const r = await fetch('https://api.github.com/repos/hermes-gadget/SlopOS-tdeck/releases?per_page=1');
+    const releases = await r.json();
+    if (releases && releases[0]) {
+      document.getElementById('version-text').textContent = releases[0].tag_name;
+    }
+  } catch(e) { /* fallback - leave loading... */ }
+})();
+</script>
 </body>
 </html>
