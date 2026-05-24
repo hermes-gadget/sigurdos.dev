@@ -7,85 +7,74 @@
   <meta name="description" content="SlopOS is an open source mesh networking firmware ecosystem for the LilyGo T-Deck and compatible devices. Chat, map, and communicate off-grid.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* ── Reset ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background: #0F0F0F;
+      background: #0A0A0A;
       color: #DCDDDE;
       font-family: 'Pixelify Sans', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: 17px;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Pixel theme ──────────────────────────── */
     :root {
-      --bg-primary: #0F0F0F;
-      --bg-secondary: #181818;
-      --bg-tertiary: #1E1E1E;
-      --bg-input: #252525;
+      --bg-primary: #0A0A0A;
+      --bg-secondary: #111111;
+      --bg-tertiary: #1A1A1A;
+      --bg-card: #141414;
       --accent: #00BFFF;
-      --accent-dim: rgba(0,191,255,0.15);
+      --accent-glow: rgba(0,191,255,0.08);
       --accent-green: #3BA55D;
       --accent-red: #ED4245;
-      --text-primary: #DCDDDE;
+      --accent-orange: #FAA61A;
+      --text-primary: #EAEAEA;
       --text-secondary: #949BA4;
       --text-muted: #5C6067;
-      --divider: #2A2A2A;
+      --divider: #222222;
       --border-w: 2px;
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    img { max-width: 100%; height: auto; }
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; text-decoration: underline; }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
 
-    /* ── Pixel heading font ───────────────────── */
-    h1, h2, h3, .pixel {
+    h1, h2, h3, .font-pixel {
       font-family: 'Press Start 2P', monospace;
-      line-height: 1.4;
-      letter-spacing: -0.5px;
+      line-height: 1.5;
     }
 
-    h1 { font-size: 24px; color: var(--accent); }
-    h2 { font-size: 18px; color: var(--accent); margin-bottom: 24px; }
-    h3 { font-size: 12px; color: var(--text-primary); margin-bottom: 12px; }
+    h1 { font-size: 32px; color: var(--accent); }
+    h2 { font-size: 20px; color: var(--accent); margin-bottom: 28px; }
+    h3 { font-size: 13px; color: var(--text-primary); margin-bottom: 12px; }
+    h4 { font-family: 'Pixelify Sans', sans-serif; font-size: 15px; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
 
     /* ── Top bar ──────────────────────────────── */
     .topbar {
       background: var(--bg-secondary);
       border-bottom: var(--border-w) solid var(--divider);
-      padding: 12px 0;
+      padding: 14px 0;
       position: sticky;
       top: 0;
       z-index: 100;
     }
-    .topbar .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    .topbar .container { display: flex; align-items: center; justify-content: space-between; }
     .topbar__brand {
       font-family: 'Press Start 2P', monospace;
-      font-size: 14px;
+      font-size: 16px;
       color: var(--accent);
     }
-    .topbar__brand span { color: var(--text-muted); }
-    .topbar__nav { display: flex; gap: 20px; align-items: center; }
+    .topbar__brand span { color: #444; }
+    .topbar__nav { display: flex; gap: 24px; align-items: center; }
     .topbar__nav a {
       font-family: 'Press Start 2P', monospace;
       font-size: 9px;
       color: var(--text-secondary);
       text-transform: uppercase;
-      padding: 6px 10px;
+      padding: 8px 12px;
       border: var(--border-w) solid transparent;
       transition: border-color 0.2s, color 0.2s;
     }
@@ -96,7 +85,7 @@
     }
     .topbar__nav .btn-flash {
       background: var(--accent);
-      color: var(--bg-primary);
+      color: #0A0A0A;
       border-color: var(--accent);
     }
     .topbar__nav .btn-flash:hover {
@@ -106,185 +95,253 @@
 
     /* ── Hero ─────────────────────────────────── */
     .hero {
-      padding: 80px 0 60px;
+      padding: 100px 0 70px;
       text-align: center;
       border-bottom: var(--border-w) solid var(--divider);
+      background:
+        radial-gradient(ellipse at 50% 0%, var(--accent-glow) 0%, transparent 60%),
+        var(--bg-primary);
     }
-    .hero h1 { font-size: 36px; margin-bottom: 16px; }
+    .hero h1 { font-size: 44px; margin-bottom: 8px; letter-spacing: 4px; }
+    .hero .version-tag {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
     .hero .subtitle {
-      font-size: 14px;
+      font-size: 16px;
       color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto 32px;
+      max-width: 640px;
+      margin: 0 auto 36px;
+      line-height: 1.8;
     }
-    .hero .badge-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .hero .badge-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
     .hero .badge {
       display: inline-block;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border: var(--border-w) solid var(--accent);
       font-family: 'Press Start 2P', monospace;
       font-size: 8px;
       text-transform: uppercase;
       color: var(--accent);
+      background: rgba(0,191,255,0.04);
     }
+    .hero .btn-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-    /* ── Section ──────────────────────────────── */
-    .section {
-      padding: 60px 0;
-      border-bottom: var(--border-w) solid var(--divider);
-    }
-    .section:last-of-type { border-bottom: none; }
-
-    /* ── Feature grid ─────────────────────────── */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-    }
-    .feature-card {
-      background: var(--bg-tertiary);
-      border: var(--border-w) solid var(--divider);
-      padding: 24px;
-    }
-    .feature-card__icon {
-      font-size: 28px;
-      margin-bottom: 12px;
-      display: block;
-    }
-    .feature-card h3 { margin-bottom: 8px; }
-    .feature-card p { font-size: 14px; color: var(--text-secondary); }
-
-    /* ── Firmware table ───────────────────────── */
-    .fw-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    .fw-table th, .fw-table td {
-      border: var(--border-w) solid var(--divider);
-      padding: 12px 16px;
-      text-align: left;
-    }
-    .fw-table th {
-      background: var(--bg-secondary);
-      font-family: 'Press Start 2P', monospace;
-      font-size: 9px;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    .fw-table td { background: var(--bg-tertiary); }
-    .fw-table .tag {
-      display: inline-block;
-      padding: 2px 8px;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 7px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-    }
-
-    /* ── Call to action ───────────────────────── */
-    .cta {
-      text-align: center;
-      padding: 60px 0;
-    }
-    .cta h2 { margin-bottom: 16px; }
-    .cta p { color: var(--text-secondary); margin-bottom: 24px; font-size: 14px; }
     .btn {
       display: inline-block;
-      padding: 12px 28px;
+      padding: 14px 32px;
       font-family: 'Press Start 2P', monospace;
       font-size: 10px;
       text-transform: uppercase;
       border: var(--border-w) solid var(--accent);
       background: var(--accent);
-      color: var(--bg-primary);
+      color: #0A0A0A;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      transition: all 0.2s;
     }
-    .btn:hover {
-      background: transparent;
+    .btn:hover { background: transparent; color: var(--accent); text-decoration: none; }
+    .btn--outline { background: transparent; color: var(--accent); }
+    .btn--outline:hover { background: var(--accent); color: #0A0A0A; }
+
+    /* ── Terminal art ─────────────────────────── */
+    .terminal-wrap {
+      border-bottom: var(--border-w) solid var(--divider);
+      padding: 40px 0;
+      background: var(--bg-secondary);
+    }
+    .terminal-art {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.35;
       color: var(--accent);
-      text-decoration: none;
+      background: #050505;
+      border: var(--border-w) solid #222;
+      padding: 24px 28px;
+      max-width: 560px;
+      margin: 0 auto;
+      overflow-x: auto;
+      white-space: pre;
     }
-    .btn--outline {
-      background: transparent;
+    .terminal-art .dim { color: #444; }
+    .terminal-art .green { color: var(--accent-green); }
+    .terminal-art .red { color: var(--accent-red); }
+
+    /* ── Section ──────────────────────────────── */
+    .section {
+      padding: 70px 0;
+      border-bottom: var(--border-w) solid var(--divider);
+    }
+    .section__intro {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+
+    /* ── Feature grid ─────────────────────────── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: var(--border-w) solid var(--divider);
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: var(--accent); }
+    .feature-card__icon { font-size: 30px; margin-bottom: 14px; display: block; }
+    .feature-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* ── Spec comparison ───────────────────────── */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .spec-card {
+      background: var(--bg-card);
+      border: var(--border-w) solid var(--divider);
+      padding: 28px;
+    }
+    .spec-card h3 { margin-bottom: 16px; font-size: 11px; }
+    .spec-card ul { list-style: none; }
+    .spec-card li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--divider);
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .spec-card li:last-child { border-bottom: none; }
+    .spec-card li .label { color: var(--text-muted); white-space: nowrap; }
+    .spec-card li .value { color: var(--text-primary); text-align: right; }
+
+    /* ── Stats strip ──────────────────────────── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--divider);
+      border: var(--border-w) solid var(--divider);
+    }
+    .stat-item {
+      background: var(--bg-card);
+      padding: 32px 20px;
+      text-align: center;
+    }
+    .stat-item__num {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 22px;
       color: var(--accent);
+      margin-bottom: 8px;
     }
-    .btn--outline:hover {
-      background: var(--accent);
-      color: var(--bg-primary);
+    .stat-item__label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    .btn + .btn { margin-left: 12px; }
+
+    /* ── Release timeline ──────────────────────── */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 28px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--divider);
+    }
+    .tl-item { padding-left: 64px; position: relative; margin-bottom: 32px; }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-item__dot {
+      position: absolute;
+      left: 20px;
+      top: 6px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--accent);
+      background: var(--bg-primary);
+    }
+    .tl-item__version {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .tl-item__date { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+    .tl-item__desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* ── CTA ──────────────────────────────────── */
+    .cta-section {
+      padding: 80px 0;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 100%, var(--accent-glow) 0%, transparent 60%),
+        var(--bg-primary);
+    }
+    .cta-section p { color: var(--text-secondary); margin-bottom: 28px; font-size: 16px; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .cta-section .btn + .btn { margin-left: 14px; }
+    .cta-section .footnote { margin-top: 28px; font-size: 12px; color: var(--text-muted); }
 
     /* ── Footer ───────────────────────────────── */
     .footer {
       background: var(--bg-secondary);
       border-top: var(--border-w) solid var(--divider);
-      padding: 32px 0;
+      padding: 40px 0;
       text-align: center;
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
     }
     .footer a { color: var(--text-secondary); }
     .footer .heart { color: var(--accent-red); }
-
-    /* ── Device terminal art ──────────────────── */
-    .terminal-art {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      line-height: 1.3;
-      color: var(--accent);
-      background: var(--bg-primary);
-      border: var(--border-w) solid var(--divider);
-      padding: 20px;
-      margin: 32px auto;
-      max-width: 500px;
-      overflow-x: auto;
-      white-space: pre;
-    }
-
-    /* ── Ecosystem row ────────────────────────── */
-    .eco-row {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .eco-card {
-      flex: 1;
-      min-width: 200px;
-      background: var(--bg-tertiary);
-      border: var(--border-w) solid var(--divider);
-      padding: 20px;
-    }
-    .eco-card__title {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 9px;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    .eco-card p { font-size: 13px; color: var(--text-secondary); }
+    .footer__links { margin-top: 12px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    .footer__links a { font-size: 12px; }
 
     /* ── Responsive ──────────────────────────── */
-    @media (max-width: 640px) {
-      h1 { font-size: 20px; }
-      .hero h1 { font-size: 22px; }
-      .topbar__nav { gap: 8px; }
+    @media (max-width: 720px) {
+      h1 { font-size: 22px; }
+      h2 { font-size: 16px; }
+      .hero h1 { font-size: 26px; letter-spacing: 2px; }
+      .topbar__nav { gap: 6px; }
       .topbar__nav a { font-size: 7px; padding: 4px 6px; }
-      .topbar__brand { font-size: 10px; }
+      .topbar__brand { font-size: 12px; }
       .feature-grid { grid-template-columns: 1fr; }
-      .fw-table { font-size: 12px; }
-      .fw-table th, .fw-table td { padding: 8px 10px; }
+      .spec-grid { grid-template-columns: 1fr; }
+      .stats-strip { grid-template-columns: 1fr 1fr; }
       .btn + .btn { margin-left: 0; margin-top: 12px; }
-      .terminal-art { font-size: 9px; padding: 12px; }
+      .terminal-art { font-size: 9px; padding: 14px; }
+      .timeline::before { left: 18px; }
+      .tl-item { padding-left: 48px; }
+      .tl-item__dot { left: 10px; width: 16px; height: 16px; }
     }
 
-    /* ── Monitor flicker animation ───────────── */
-    @keyframes flicker {
-      0% { opacity: 0.95; }
-      50% { opacity: 1; }
-      100% { opacity: 0.97; }
+    @keyframes glitch {
+      0%, 90%, 100% { transform: translate(0); }
+      92% { transform: translate(-2px, 1px); }
+      94% { transform: translate(2px, -1px); }
+      96% { transform: translate(-1px, 2px); }
+      98% { transform: translate(1px, -1px); }
     }
-    body { animation: flicker 4s infinite; }
+    .hero h1 { animation: glitch 6s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .badge { animation: pulse 3s ease-in-out infinite; }
+    .badge:nth-child(2) { animation-delay: 0.5s; }
+    .badge:nth-child(3) { animation-delay: 1s; }
+    .badge:nth-child(4) { animation-delay: 1.5s; }
+    .badge:nth-child(5) { animation-delay: 2s; }
   </style>
 </head>
 <body>
@@ -294,8 +351,9 @@
     <div class="container">
       <div class="topbar__brand">SLOPOS<span>.xyz</span></div>
       <nav class="topbar__nav">
-        <a href="#about">About</a>
-        <a href="#firmware">Firmware</a>
+        <a href="#features">Features</a>
+        <a href="#specs">Specs</a>
+        <a href="#releases">Releases</a>
         <a href="#ecosystem">Ecosystem</a>
         <a href="https://github.com/hermes-gadget" target="_blank">GitHub</a>
         <a href="https://flasher.slopos.xyz" class="btn-flash">Flash</a>
@@ -307,129 +365,270 @@
   <section class="hero">
     <div class="container">
       <h1>SLOPOS</h1>
+      <p class="version-tag">v beta-0.1.31</p>
       <p class="subtitle">
-        Open source mesh networking firmware for the LilyGo T-Deck and compatible hardware.
-        Chat, map, and communicate off-grid with zero infrastructure.
+        A fully open source firmware that turns the LilyGo T-Deck into a
+        portable mesh communication device. Chat across your network, navigate
+        with offline maps, and stay connected &mdash; no towers or internet required.
       </p>
       <div class="badge-row">
         <span class="badge">ESP32-S3</span>
         <span class="badge">LoRa Mesh</span>
-        <span class="badge">LVGL GUI</span>
+        <span class="badge">LVGL v9</span>
         <span class="badge">GPL-3.0</span>
         <span class="badge">Open Source</span>
+      </div>
+      <div class="btn-row">
+        <a href="https://flasher.slopos.xyz" class="btn">Flash Your T-Deck</a>
+        <a href="https://github.com/hermes-gadget/SlopOS-tdeck/releases" class="btn btn--outline" target="_blank">Download Binary</a>
+        <a href="https://github.com/hermes-gadget/SlopOS-tdeck" class="btn btn--outline" target="_blank">Source Code</a>
       </div>
     </div>
   </section>
 
   <!-- ═══ Terminal Art ══════════════════════ -->
-  <div class="container">
-    <div class="terminal-art">
-  ___      __    ____   _____   _____   ____
+  <div class="terminal-wrap">
+    <div class="terminal-art"><span class="dim">  ___      __    ____   _____   _____   ____
  / __|    /  \  / ___\ / __\ \ / / __| / __ \
  \__ \   / /\ \ \___ \\__ \\ V / \__ \ \___ /
  |___/  /_/  \_\ \____/____/ \_/  \____/ ____\
   ____    _____   _____   __    __   _____
  / __ \  / ___/  / __  \ /_\ \ / /  / ___/
  \__  / / /__   / /  \ //_\\ V /  / /__
-   /_/  \___/  /_/  /_//_/  \_/   \___/
+   /_/  \___/  /_/  /_//_/  \_/   \___/</span>
 
-  SLOPOS v beta-0.1.31  |  LoRa Mesh  |  T-Deck
-  [boot] === SlopOS T-Deck ready ===
+  <span class="green">[boot]</span> === SlopOS T-Deck ready ===
+  <span class="dim">  Uptime: 3d 14h 22m  |  Nodes: 12  |  Mesh: OK
+  RSSI: -72 dBm  |  SNR: 8.2  |  Battery: 84%</span></div>
+  </div>
+
+  <!-- ═══ Stats ═════════════════════════════ -->
+  <div class="section" style="padding:50px 0;">
+    <div class="container">
+      <div class="stats-strip">
+        <div class="stat-item">
+          <div class="stat-item__num">15</div>
+          <div class="stat-item__label">Screens</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__num">14</div>
+          <div class="stat-item__label">KB RAM</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__num">1.1</div>
+          <div class="stat-item__label">MB Flash</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__num">172</div>
+          <div class="stat-item__label">Unit Tests</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__num">100%</div>
+          <div class="stat-item__label">Open Source</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- ═══ About ═════════════════════════════ -->
-  <section class="section" id="about">
-    <div class="container">
-      <h2>About</h2>
-      <p style="margin-bottom:16px;font-size:14px;color:var(--text-secondary);max-width:720px;">
-        SlopOS is a fully open source firmware ecosystem built on top of
-        <a href="https://github.com/meshcore-dev/MeshCore" target="_blank">MeshCore</a>,
-        a lightweight LoRa mesh networking library. It transforms the LilyGo T-Deck
-        into a portable mesh communication device with a full graphical interface.
-      </p>
-      <p style="font-size:14px;color:var(--text-secondary);max-width:720px;">
-        No towers. No SIM cards. No internet required. Just radios talking to radios.
-      </p>
-    </div>
-  </section>
-
   <!-- ═══ Features ══════════════════════════ -->
-  <section class="section">
+  <section class="section" id="features">
     <div class="container">
       <h2>Features</h2>
+      <p class="section__intro">
+        SlopOS packs a full mesh communication stack into a pocket-sized device.
+        Every feature is built from the ground up for off-grid use.
+      </p>
       <div class="feature-grid">
 
         <div class="feature-card">
           <span class="feature-card__icon">&#x1F4AC;</span>
-          <h3>Chat</h3>
-          <p>Multi-channel chat with DM support, emoji picker, and channel history that survives power loss.</p>
+          <h3>Multi-Channel Chat</h3>
+          <p>
+            Full Discord-style messaging with dynamic channel discovery, DM support, an emoji picker,
+            and message history that survives power loss. Send text across your mesh network to
+            individuals or channels &mdash; all with end-to-end encryption.
+          </p>
         </div>
 
         <div class="feature-card">
-          <span class="feature-card__icon">&#x1F5FA;</span>
-          <h3>Offline Maps</h3>
-          <p>JPEG tile-based offline maps from SD card. Pan, zoom, and navigate without any network.</p>
+          <span class="feature-card__icon">&#x1F5FA;&#xFE0F;</span>
+          <h3>Offline Tile Maps</h3>
+          <p>
+            Navigate with full offline JPEG tile maps stored on the SD card. Pan, zoom, and explore
+            without any network connection. Tile downloader for 18 UK city presets included.
+            Rendered directly to the display via the ESP32 hardware JPEG decoder.
+          </p>
         </div>
 
         <div class="feature-card">
           <span class="feature-card__icon">&#x1F30D;</span>
-          <h3>Mesh Network</h3>
-          <p>Multi-hop LoRa mesh with automatic routing, discovery, and end-to-end encryption.</p>
+          <h3>Multi-Hop LoRa Mesh</h3>
+          <p>
+            Built on MeshCore, a battle-tested LoRa mesh networking library. Automatic route discovery,
+            flood routing with ACKs, path-based direct messaging, and node discovery via periodic
+            adverts. Every packet is encrypted with Ed25519 keys.
+          </p>
         </div>
 
         <div class="feature-card">
           <span class="feature-card__icon">&#x1F50D;</span>
-          <h3>Node Discovery</h3>
-          <p>Heard, Network, Trace, and Signal screens give full visibility into mesh topology and signal quality.</p>
+          <h3>Network Visibility</h3>
+          <p>
+            Five dedicated screens for full mesh awareness: Heard (searchable RSSI list with columns),
+            Network (recently active nodes), Trace (path quality to any contact), Signal (live RSSI/SNR
+            with noise floor), and an integrated diagnostics terminal with colored log output.
+          </p>
         </div>
 
         <div class="feature-card">
-          <span class="feature-card__icon">&#x2328;</span>
-          <h3>Hardware Keyboard</h3>
-          <p>Full I2C keyboard input with backlight control. Trackball for one-handed navigation.</p>
+          <span class="feature-card__icon">&#x2328;&#xFE0F;</span>
+          <h3>Hardware Keyboard + Trackball</h3>
+          <p>
+            Full QWERTY input via the I2C keyboard MCU with configurable backlight brightness.
+            Five-direction trackball with debounced events for one-handed navigation through
+            the entire UI. Touch input also supported via the GT911 capacitive controller.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-card__icon">&#x2699;&#xFE0F;</span>
+          <h3>Live Configuration</h3>
+          <p>
+            On-device setup wizard for first boot, live radio config (frequency, spreading factor,
+            TX power, coding rate), date/time setting, keyboard backlight control, node naming,
+            and channel management with hashtag or PSK-based joining. All settings persist in NVS.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-card__icon">&#x1F4F1;</span>
+          <h3>Flutter Mobile Client</h3>
+          <p>
+            Connect your phone or desktop to the mesh via BLE, USB, or TCP using the SlopOS Client
+            &mdash; a full Flutter app with the same pixel theme. Read messages, manage channels,
+            and browse contacts without the T-Deck display.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-card__icon">&#x1F30D;</span>
+          <h3>GPS + Battery Management</h3>
+          <p>
+            Built-in GPS support with multi-constellation NMEA parsing ($GP and $GN),
+            battery voltage monitoring with percentage calculation, deep sleep on low battery,
+            and automatic display auto-off after 30 seconds of inactivity.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-card__icon">&#x1F4BB;</span>
+          <h3>Developer Friendly</h3>
+          <p>
+            PlatformIO-based build system, 172+ native unit tests with hardware mocks,
+            CI/CD via GitHub Actions, CONTRIBUTING.md, and a web flasher for zero-tool
+            firmware installation. Everything is GPL-3.0 and open for contributions.
+          </p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ═══ Firmware ══════════════════════════ -->
-  <section class="section" id="firmware">
+  <!-- ═══ Specs ═════════════════════════════ -->
+  <section class="section" id="specs">
     <div class="container">
-      <h2>Firmware</h2>
-      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:24px;">
-        Two firmware variants power the SlopOS ecosystem.
+      <h2>Technical Specs</h2>
+      <p class="section__intro">
+        Built for the LilyGo T-Deck, SlopOS pushes the ESP32-S3 to its limits
+        while leaving room for expansion.
       </p>
+      <div class="spec-grid">
 
-      <table class="fw-table">
-        <thead>
-          <tr>
-            <th>Firmware</th>
-            <th>Hardware</th>
-            <th>Stack</th>
-            <th>License</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>SlopOS-TDeck</strong> <span class="tag">beta</span></td>
-            <td>LilyGo T-Deck<br><small>(ESP32-S3, 16MB)</small></td>
-            <td>LVGL v9 + LovyanGFX + MeshCore</td>
-            <td>GPL-3.0</td>
-          </tr>
-          <tr>
-            <td><strong>SlopOS Client</strong> <span class="tag">alpha</span></td>
-            <td>Android / Desktop<br><small>(Flutter)</small></td>
-            <td>Flutter + BLE / USB / TCP</td>
-            <td>GPL-3.0</td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="spec-card">
+          <h3>Hardware</h3>
+          <ul>
+            <li><span class="label">MCU</span><span class="value">ESP32-S3 @ 240 MHz</span></li>
+            <li><span class="label">Flash</span><span class="value">16 MB</span></li>
+            <li><span class="label">PSRAM</span><span class="value">8 MB</span></li>
+            <li><span class="label">Display</span><span class="value">ST7789 320x240</span></li>
+            <li><span class="label">Radio</span><span class="value">SX1262 LoRa</span></li>
+            <li><span class="label">Touch</span><span class="value">GT911 Capacitive</span></li>
+            <li><span class="label">Keyboard</span><span class="value">ESP32-C3 I2C Slave</span></li>
+            <li><span class="label">GPS</span><span class="value">L76K GNSS (Plus model)</span></li>
+          </ul>
+        </div>
 
-      <div style="text-align:center;margin-top:24px;">
-        <a href="https://github.com/hermes-gadget/SlopOS-tdeck/releases" class="btn" target="_blank">Download Latest</a>
-        <a href="https://github.com/hermes-gadget/SlopOS-tdeck" class="btn btn--outline" target="_blank">Source Code</a>
+        <div class="spec-card">
+          <h3>Firmware</h3>
+          <ul>
+            <li><span class="label">UI Framework</span><span class="value">LVGL v9</span></li>
+            <li><span class="label">Display Driver</span><span class="value">LovyanGFX</span></li>
+            <li><span class="label">Mesh Stack</span><span class="value">MeshCore</span></li>
+            <li><span class="label">Encryption</span><span class="value">Ed25519</span></li>
+            <li><span class="label">Radio Driver</span><span class="value">RadioLib</span></li>
+            <li><span class="label">Font Rendering</span><span class="value">Montserrat + Noto Emoji</span></li>
+            <li><span class="label">Persistence</span><span class="value">NVS + SPIFFS</span></li>
+            <li><span class="label">Storage</span><span class="value">MicroSD (optional)</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Releases ══════════════════════════ -->
+  <section class="section" id="releases">
+    <div class="container">
+      <h2>Recent Releases</h2>
+      <p class="section__intro">
+        Active development. New features ship regularly.
+      </p>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.31</div>
+          <div class="tl-item__date">May 24, 2026</div>
+          <div class="tl-item__desc">
+            Emoji support with picker dialog, channel and message persistence across reboots,
+            onboarding wizard, web flasher compatibility fix, and keyboard backlight auto-off.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.30</div>
+          <div class="tl-item__date">May 23, 2026</div>
+          <div class="tl-item__desc">
+            Keyboard backlight control with brightness slider, hashtag-based channel creation,
+            CONTRIBUTING.md for open source contributors, and radio init reliability improvements.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.29</div>
+          <div class="tl-item__date">May 23, 2026</div>
+          <div class="tl-item__desc">
+            Map tile rendering overhaul with PSRAM canvas, LRU tile cache, pan and zoom controls.
+            SD card HAL module for tile storage. Web flasher manifest generation in CI.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.28</div>
+          <div class="tl-item__date">May 22, 2026</div>
+          <div class="tl-item__desc">
+            Responsive layout system for display-size-agnostic UI. Radio Setup screen with
+            frequency presets. Codex deep audit with 8 critical fixes including GPS parser
+            off-by-one, mesh text safety, and trace buffer overflow.
+          </div>
+        </div>
+
+      </div>
+      <div style="text-align:center;margin-top:32px;">
+        <a href="https://github.com/hermes-gadget/SlopOS-tdeck/releases" class="btn btn--outline" target="_blank">View All Releases</a>
       </div>
     </div>
   </section>
@@ -438,29 +637,53 @@
   <section class="section" id="ecosystem">
     <div class="container">
       <h2>Ecosystem</h2>
-      <div class="eco-row">
+      <p class="section__intro">
+        SlopOS is more than firmware. The full ecosystem gives you everything you need
+        to build, flash, and interact with your mesh network.
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;">
 
-        <div class="eco-card">
-          <div class="eco-card__title">SlopOS-TDeck</div>
-          <p>Standalone T-Deck firmware with LVGL GUI. Chat, maps, mesh. The main SlopOS experience.</p>
-          <p style="margin-top:8px;">
+        <div style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
+          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">SlopOS-TDeck</div>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
+            The main firmware. Full LVGL GUI on the LilyGo T-Deck with chat, maps, mesh networking,
+            and all 15 screens. Flashed via web browser or esptool.
+          </p>
+          <p style="margin-top:12px;">
             <a href="https://github.com/hermes-gadget/SlopOS-tdeck" target="_blank">GitHub &rarr;</a>
           </p>
         </div>
 
-        <div class="eco-card">
-          <div class="eco-card__title">SlopOS Client</div>
-          <p>Flutter mobile and desktop client. Connect to your mesh over BLE, USB, or TCP.</p>
-          <p style="margin-top:8px;">
+        <div style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
+          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">SlopOS Client</div>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
+            A Flutter mobile and desktop app that connects to your mesh over BLE, USB serial, or TCP.
+            Same pixel theme. Read messages, browse contacts, manage channels remotely.
+          </p>
+          <p style="margin-top:12px;">
             <a href="https://github.com/hermes-gadget/SlopOS-client" target="_blank">GitHub &rarr;</a>
           </p>
         </div>
 
-        <div class="eco-card">
-          <div class="eco-card__title">Web Flasher</div>
-          <p>Browser-based firmware flashing and configuration tool. No software install needed.</p>
-          <p style="margin-top:8px;">
+        <div style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
+          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">Web Flasher</div>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
+            Zero-install browser-based firmware flashing and configuration tool. Works over WebSerial.
+            Flash, configure radio settings, and verify device status from one page.
+          </p>
+          <p style="margin-top:12px;">
             <a href="https://flasher.slopos.xyz">flasher.slopos.xyz &rarr;</a>
+          </p>
+        </div>
+
+        <div style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
+          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">MeshCore</div>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
+            The underlying LoRa mesh networking library that powers the entire ecosystem.
+            Multi-hop routing, Ed25519 encryption, and broad hardware support.
+          </p>
+          <p style="margin-top:12px;">
+            <a href="https://github.com/meshcore-dev/MeshCore" target="_blank">GitHub &rarr;</a>
           </p>
         </div>
 
@@ -469,32 +692,35 @@
   </section>
 
   <!-- ═══ CTA ═══════════════════════════════ -->
-  <section class="cta">
+  <div class="cta-section">
     <div class="container">
-      <h2>Get Started</h2>
+      <h2>Get On The Mesh</h2>
       <p>
-        Flash your T-Deck in under 2 minutes. No account, no tools to install.
+        Flash your T-Deck in under two minutes. No account. No tools to install.
+        Just a browser and a USB cable.
       </p>
       <a href="https://flasher.slopos.xyz" class="btn">Flash Your Device</a>
       <a href="https://github.com/hermes-gadget/SlopOS-tdeck/blob/dev/CONTRIBUTING.md" class="btn btn--outline" target="_blank">Contribute</a>
-      <p style="margin-top:32px;font-size:12px;color:var(--text-muted);">
-        Everything is open source. GPL-3.0 licensed. Built with &#x2665; for the mesh community.
+      <p class="footnote">
+        Everything is open source. GPL-3.0 licensed.
+        Built for the mesh community.
       </p>
     </div>
-  </section>
+  </div>
 
   <!-- ═══ Footer ════════════════════════════ -->
   <footer class="footer">
     <div class="container">
       <p>
-        SlopOS is not affiliated with LilyGo or Espressif.<br>
+        SlopOS is not affiliated with LilyGo or Espressif Systems.
         Built with <span class="heart">&#x2665;</span> by the mesh community.
       </p>
-      <p style="margin-top:8px;">
-        <a href="https://github.com/hermes-gadget/slopos.xyz" target="_blank">Site source</a>
-        &middot;
+      <div class="footer__links">
+        <a href="https://github.com/hermes-gadget/slopos.xyz" target="_blank">Site Source</a>
         <a href="https://github.com/hermes-gadget/SlopOS-tdeck" target="_blank">Firmware</a>
-      </p>
+        <a href="https://github.com/hermes-gadget/SlopOS-client" target="_blank">Client</a>
+        <a href="https://github.com/hermes-gadget" target="_blank">GitHub Org</a>
+      </div>
     </div>
   </footer>
 
