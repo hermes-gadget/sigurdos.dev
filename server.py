@@ -9,6 +9,14 @@ import urllib.parse
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 
 class SiteHandler(http.server.SimpleHTTPRequestHandler):
+    def end_headers(self):
+        # Prevent caching on HTML to avoid stale page content
+        if self.path == '/' or self.path.endswith('.html'):
+            self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+            self.send_header("Pragma", "no-cache")
+            self.send_header("Expires", "0")
+        super().end_headers()
+
     def do_GET(self):
         # Tile proxy: /api/tile?z={z}&x={x}&y={y}
         if self.path.startswith("/api/tile?"):
