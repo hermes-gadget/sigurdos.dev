@@ -966,7 +966,7 @@
   updateEstimate();
 
   // Download button
-  downloadBtn.addEventListener('click', async function() {
+  downloadBtn.addEventListener('click', function() {
     var bounds = map.getBounds();
     var minZ = parseInt(minZoomSel.value);
     var maxZ = parseInt(maxZoomSel.value);
@@ -994,47 +994,57 @@
     var total = tileList.length;
     var completed = 0;
     var failed = 0;
+    var activeWorkers = 0;
+    var tileIdx = 0;
     var zip = new JSZip();
+    var poolSize = 12;
 
-    // Download in batches of 8
-    var batchSize = 8;
-    for (var i = 0; i < tileList.length; i += batchSize) {
-      var batch = tileList.slice(i, i + batchSize);
-      var results = await Promise.allSettled(batch.map(async function(t) {
-        var url = proxyBase + '?z=' + t.z + '&x=' + t.x + '&y=' + t.y;
-        var resp = await fetch(url);
+    function worker(t) {
+      var url = proxyBase + '?z=' + t.z + '&x=' + t.x + '&y=' + t.y;
+      fetch(url).then(function(resp) {
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        var blob = await resp.blob();
+        return resp.blob();
+      }).then(function(blob) {
         var path = 'tiles/' + t.z + '/' + t.x + '/' + t.y + '.png';
         zip.file(path, blob);
-      }));
-      for (var r = 0; r < results.length; r++) {
-        if (results[r].status === 'fulfilled') completed++;
-        else failed++;
+        completed++;
+      }).catch(function() {
+        failed++;
+      }).then(function() {
+        activeWorkers--;
+        var done = completed + failed;
+        progressEl.textContent = '' + done + '/' + total + ' tiles (' + failed + ' failed, ' + Math.round(done / total * 100) + '%)';
+        pump();
+      });
+    }
+
+    function pump() {
+      while (tileIdx < total && activeWorkers < poolSize) {
+        activeWorkers++;
+        worker(tileList[tileIdx++]);
       }
-      var pct = Math.round((completed + failed) / total * 100);
-      progressEl.textContent = '' + (completed + failed) + '/' + total + ' tiles (' + failed + ' failed, ' + pct + '%)';
+      if (completed + failed >= total) finish();
     }
 
-    if (failed > 0) {
-      progressEl.textContent += ' - ' + failed + ' tiles failed to download.';
+    function finish() {
+      if (failed > 0) progressEl.textContent += ' - ' + failed + ' tiles failed.';
+      progressEl.textContent += ' Creating zip...';
+      zip.generateAsync({ type: 'blob' }).then(function(zipBlob) {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(zipBlob);
+        a.download = 'slopos-tiles-z' + minZ + '-z' + maxZ + '.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+        var sizeStr = zipBlob.size > 1048576 ? (zipBlob.size / 1048576).toFixed(1) + ' MB' : (zipBlob.size / 1024).toFixed(0) + ' KB';
+        progressEl.textContent = 'Done. ' + sizeStr + ' downloaded.';
+        downloadBtn.disabled = false;
+        downloadBtn.textContent = 'Download Current View';
+      });
     }
 
-    // Generate and download zip
-    progressEl.textContent += ' Creating zip...';
-    var zipBlob = await zip.generateAsync({ type: 'blob' });
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(zipBlob);
-    a.download = 'slopos-tiles-z' + minZ + '-z' + maxZ + '.zip';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
-
-    var sizeStr = zipBlob.size > 1048576 ? (zipBlob.size / 1048576).toFixed(1) + ' MB' : (zipBlob.size / 1024).toFixed(0) + ' KB';
-    progressEl.textContent = 'Done. ' + sizeStr + ' downloaded.';
-    downloadBtn.disabled = false;
-    downloadBtn.textContent = 'Download Current View';
+    pump();
   });
 })();
 </script>
