@@ -306,6 +306,44 @@
     .footer__links { margin-top: 12px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
     .footer__links a { font-size: 12px; }
 
+    /* ── Contributors ─────────────────────── */
+    .contributors {
+      padding: 50px 0;
+      border-bottom: var(--border-w) solid var(--divider);
+    }
+    .contributors__grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+    .contributor {
+      text-align: center;
+      width: 80px;
+    }
+    .contributor__avatar {
+      width: 48px;
+      height: 48px;
+      border: var(--border-w) solid var(--divider);
+      display: block;
+      margin: 0 auto 8px;
+      transition: border-color 0.2s;
+    }
+    .contributor:hover .contributor__avatar {
+      border-color: var(--accent);
+    }
+    .contributor__name {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: block;
+    }
+    .contributor__commits {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
     /* ── Responsive ──────────────────────────── */
     @media (max-width: 720px) {
       h1 { font-size: 22px; }
@@ -689,6 +727,23 @@
     </div>
   </section>
 
+  <!-- ═══ Contributors ════════════════════ -->
+  <section class="contributors">
+    <div class="container" style="text-align:center;">
+      <h2>Contributors</h2>
+      <p class="section__intro" style="margin:0 auto;">
+        Open source is built by people. Everyone who contributes to SlopOS
+        gets a place here.
+      </p>
+      <div class="contributors__grid" id="contributors-grid">
+        <div style="color:var(--text-muted);font-size:14px;">Loading contributors...</div>
+      </div>
+      <div style="margin-top:24px;">
+        <a href="https://github.com/hermes-gadget/SlopOS-tdeck/blob/dev/CONTRIBUTING.md" class="btn btn--outline" target="_blank">Add Your Name</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ CTA ═══════════════════════════════ -->
   <div class="cta-section">
     <div class="container">
@@ -723,15 +778,38 @@
   </footer>
 
 <script>
-// Auto-update version tag from GitHub releases
+// Auto-update version tag + contributors from GitHub
 (async function() {
+  const owner = 'hermes-gadget', repo = 'SlopOS-tdeck';
   try {
-    const r = await fetch('https://api.github.com/repos/hermes-gadget/SlopOS-tdeck/releases?per_page=1');
-    const releases = await r.json();
+    // Version tag
+    const vr = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases?per_page=1`);
+    const releases = await vr.json();
     if (releases && releases[0]) {
       document.getElementById('version-text').textContent = releases[0].tag_name;
     }
-  } catch(e) { /* fallback - leave loading... */ }
+  } catch(e) { /* fallback */ }
+
+  try {
+    // Contributors
+    const cr = await fetch(`https://api.github.com/repos/${owner}/${repo}/contributors`);
+    const contributors = await cr.json();
+    const grid = document.getElementById('contributors-grid');
+    if (contributors && contributors.length) {
+      grid.innerHTML = contributors.map(c => `
+        <a href="${c.html_url}" target="_blank" class="contributor">
+          <img src="${c.avatar_url}&s=48" alt="${c.login}" class="contributor__avatar" width="48" height="48" loading="lazy">
+          <span class="contributor__name">${c.login}</span>
+          <span class="contributor__commits">${c.contributions} commit${c.contributions !== 1 ? 's' : ''}</span>
+        </a>
+      `).join('');
+    } else {
+      grid.innerHTML = '<div style="color:var(--text-muted);font-size:14px;">No contributors yet</div>';
+    }
+  } catch(e) {
+    document.getElementById('contributors-grid').innerHTML =
+      '<div style="color:var(--text-muted);font-size:14px;">Could not load contributors</div>';
+  }
 })();
 </script>
 </body>
