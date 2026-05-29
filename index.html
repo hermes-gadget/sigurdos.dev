@@ -623,6 +623,35 @@
 
         <div class="tl-item">
           <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.36</div>
+          <div class="tl-item__date">May 29, 2026</div>
+          <div class="tl-item__desc">
+            Channel removal from UI with delete buttons, contact removal with confirmation dialog,
+            reset path to a contact from contact detail screen, auto-scroll chat to new messages only when at bottom,
+            NAV serial command for remote programmatic screen navigation,
+            SlopOS_TDeck_remote_test_radio hybrid build (test controller + full LoRa mesh),
+            chat channel list layout fixes (scrollbars, overlap, preview truncation),
+            map tile discovery overflow fix, HAL driver layer bug fixes (7 issues),
+            mesh and UI layer bug fixes (10 issues), guard display serial reader behind !SLOPOS_REMOTE_TEST,
+            allocate map canvas from PSRAM first to reduce boot heap pressure,
+            use-after-free fix in Reset Path button (strdup + LV_EVENT_DELETE),
+            DM conversation history restored on reboot via pseudo-channels,
+            sendTrace() passes correct path_len to sendDirect(),
+            NVS node_name temp buffer preserves defaults on fresh flash,
+            dynamic fallback display buffer instead of 51 KB static DRAM allocation,
+            LORA_TX_PWR build flag actually controls TX power,
+            code cleanup batch from Claude Opus 4.8 audit info items,
+            refresh_channels() stack arrays moved to static storage (1.9KB stack to BSS),
+            terminal command input buffers made static in LV_EVENT_READY lambda,
+            emergency LVGL draw buffer fallback when PSRAM and DRAM both fail,
+            ROADMAP.md added with full implementation plan across all phases,
+            remote_test_radio build for bidirectional LoRa testing,
+            all 298 native tests passing, full duplex radio confirmed, 5-minute stability soak passes.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
           <div class="tl-item__version">beta-0.1.35</div>
           <div class="tl-item__date">May 28, 2026</div>
           <div class="tl-item__desc">
