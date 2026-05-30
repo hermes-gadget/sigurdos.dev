@@ -623,6 +623,34 @@
 
         <div class="tl-item">
           <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.37</div>
+          <div class="tl-item__date">May 30, 2026</div>
+          <div class="tl-item__desc">
+            Theme system with 6 visual presets (Default Cyan, Midnight Blue, Forest Green, Sunset Orange, Royal Purple, Amber Glow) persistable to NVS,
+            settings organized into 4 category submenus (Radio/Mesh, GPS/Location, Display/UI, System),
+            home screen icons overhauled for distinct meaning (ADVERTISE=bell, TRACE=shuffle, SETUP=house),
+            contacts list persists across reboots and SPIFFS re-flashes,
+            per-contact RSSI/SNR history with sparkline chart,
+            message search in chat history,
+            message delivery status (ACK ticks) with visible checkmark in chat bubbles,
+            custom variables key-value store,
+            auto-add contact type config with per-type bitmask filter,
+            GPS enable/read-interval controls,
+            SlopMeshV2 cutover as default mesh implementation,
+            auto-scroll chat to new messages only when at bottom,
+            PendingAck in_use default initializer fixes ACK tracking corruption on heap reuse,
+            4 NodePrefs fields (gps_enabled, gps_interval, autoadd_config, autoadd_max_hops) now persisted to NVS,
+            ACK checkmark visibility fixes (white timestamp color, periodic UI refresh, unicode glyph),
+            DM channel delete button hidden for synthetic entries,
+            UI cleanup removing #channels top bar, eye icon, scrollbars,
+            chat channel list layout fixes,
+            all 298 native tests passing, 5-minute stability soak passes,
+            firmware builds and CI passes at 1,320,592 bytes.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
           <div class="tl-item__version">beta-0.1.36</div>
           <div class="tl-item__date">May 29, 2026</div>
           <div class="tl-item__desc">
