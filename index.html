@@ -93,6 +93,58 @@
       color: var(--accent);
     }
 
+    /* ── Hamburger (mobile) ────────────────────── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: var(--border-w) solid var(--divider);
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 3px;
+      background: var(--text-secondary);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* ── Mobile Nav Overlay ─────────────────────── */
+    .mobile-nav {
+      display: none;
+      background: var(--bg-secondary);
+      border-bottom: var(--border-w) solid var(--divider);
+      padding: 0 24px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .mobile-nav.open {
+      display: block;
+      max-height: 400px;
+      padding: 12px 24px 16px;
+    }
+    .mobile-nav a {
+      display: block;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--accent); text-decoration: none; }
+    .mobile-nav .btn-flash {
+      color: var(--accent);
+    }
+
     /* ── Hero ─────────────────────────────────── */
     .hero {
       padding: 100px 0 70px;
@@ -349,9 +401,8 @@
       h1 { font-size: 22px; }
       h2 { font-size: 16px; }
       .hero h1 { font-size: 26px; letter-spacing: 2px; }
-      .topbar__nav { gap: 6px; }
-      .topbar__nav a { font-size: 7px; padding: 4px 6px; }
-      .topbar__brand { font-size: 12px; }
+      .topbar__nav { display: none; }
+      .hamburger { display: flex; }
       .feature-grid { grid-template-columns: 1fr; }
       .spec-grid { grid-template-columns: 1fr; }
       .stats-strip { grid-template-columns: 1fr 1fr; }
@@ -396,8 +447,19 @@
         <a href="https://github.com/hermes-gadget" target="_blank">GitHub</a>
         <a href="https://flasher.slopos.xyz" class="btn-flash">Flash</a>
       </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#features">Features</a>
+    <a href="#specs">Specs</a>
+    <a href="#releases">Releases</a>
+    <a href="#ecosystem">Ecosystem</a>
+    <a href="https://github.com/hermes-gadget" target="_blank">GitHub</a>
+    <a href="https://flasher.slopos.xyz" class="btn-flash">Flash</a>
+  </div>
 
   <!-- ═══ Hero ══════════════════════════════ -->
   <section class="hero">
@@ -997,7 +1059,6 @@
 (async function() {
   const owner = 'hermes-gadget', repo = 'SlopOS-tdeck';
   try {
-    // Version tag
     const vr = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases?per_page=1`);
     const releases = await vr.json();
     if (releases && releases[0]) {
@@ -1025,6 +1086,31 @@
     document.getElementById('contributors-grid').innerHTML =
       '<div style="color:var(--text-muted);font-size:14px;">Could not load contributors</div>';
   }
+})();
+</script>
+
+<script>
+// Hamburger menu toggle
+(function() {
+  var btn = document.getElementById('hamburger');
+  var nav = document.getElementById('mobileNav');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', function() {
+    btn.classList.toggle('active');
+    nav.classList.toggle('open');
+  });
+  nav.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') {
+      btn.classList.remove('active');
+      nav.classList.remove('open');
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (!btn.contains(e.target) && !nav.contains(e.target)) {
+      btn.classList.remove('active');
+      nav.classList.remove('open');
+    }
+  });
 })();
 </script>
 
