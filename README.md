@@ -1,6 +1,6 @@
-# slopos.xyz
+# sigurdos.dev
 
-Source for the [SlopOS firmware](https://github.com/hermes-gadget/SlopOS-tdeck) website.
+Source for the [SigurdOS firmware](https://github.com/hermes-gadget/SigurdOS-tdeck) website.
 
 ## Stack
 
@@ -10,7 +10,7 @@ Source for the [SlopOS firmware](https://github.com/hermes-gadget/SlopOS-tdeck) 
 
 ## Deploy
 
-The site is served via Nginx on the slopos.xyz VM. Push to `main` and pull on the server.
+The site is served via Nginx on the sigurdos.dev VM. Push to `main` and pull on the server.
 
 ## License
 

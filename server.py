@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SlopOS Website Server - serves static files + proxies map tiles."""
+"""SigurdOS Website Server - serves static files + proxies map tiles."""
 import http.server
 import os
 import sys
@@ -34,7 +34,7 @@ class SiteHandler(http.server.SimpleHTTPRequestHandler):
                 sub = "a" if (int(x) + int(y)) % 2 == 0 else "b"
                 tile_url = f"https://{sub}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
             req = urllib.request.Request(tile_url, headers={
-                "User-Agent": "SlopOSMapTool/1.0",
+                "User-Agent": "SigurdOSMapTool/1.0",
             })
             try:
                 with urllib.request.urlopen(req, timeout=10) as resp:

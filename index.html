@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SlopOS — open source mesh networking firmware</title>
-  <meta name="description" content="SlopOS is an open source mesh networking firmware ecosystem for the LilyGo T-Deck and compatible devices. Chat, map, and communicate off-grid.">
+  <title>SigurdOS — open source mesh networking firmware</title>
+  <meta name="description" content="SigurdOS is an open source mesh networking firmware ecosystem for the LilyGo T-Deck and compatible devices. Chat, map, and communicate off-grid.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -450,14 +450,14 @@
   <!-- ═══ Top Bar ═══════════════════════════ -->
   <header class="topbar">
     <div class="container">
-      <div class="topbar__brand">SLOPOS<span>.xyz</span></div>
+      <div class="topbar__brand">SIGURDOS<span>.dev</span></div>
       <nav class="topbar__nav">
         <a href="#features">Features</a>
         <a href="#specs">Specs</a>
         <a href="#releases">Releases</a>
         <a href="#ecosystem">Ecosystem</a>
         <a href="https://github.com/hermes-gadget" target="_blank">GitHub</a>
-        <a href="https://flasher.slopos.xyz" class="btn-flash">Flash</a>
+        <a href="https://flasher.sigurdos.dev" class="btn-flash">Flash</a>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -470,7 +470,7 @@
     <a href="#releases">Releases</a>
     <a href="#ecosystem">Ecosystem</a>
     <a href="https://github.com/hermes-gadget" target="_blank">GitHub</a>
-    <a href="https://flasher.slopos.xyz" class="btn-flash">Flash</a>
+    <a href="https://flasher.sigurdos.dev" class="btn-flash">Flash</a>
   </div>
 
   <!-- ═══ Banner ═══════════════════════════════ -->
@@ -481,7 +481,7 @@
   <!-- ═══ Hero ══════════════════════════════ -->
   <section class="hero">
     <div class="container">
-      <h1>SLOPOS</h1>
+      <h1>SIGURDOS</h1>
       <p class="version-tag" id="version-tag">v <span id="version-text">loading...</span></p>
       <p class="subtitle">
         A fully open source firmware that turns the LilyGo T-Deck into a
@@ -496,9 +496,9 @@
         <span class="badge">Open Source</span>
       </div>
       <div class="btn-row">
-        <a href="https://flasher.slopos.xyz" class="btn">Flash Your T-Deck</a>
-        <a href="https://github.com/hermes-gadget/SlopOS-tdeck/releases" class="btn btn--outline" target="_blank">Download Binary</a>
-        <a href="https://github.com/hermes-gadget/SlopOS-tdeck" class="btn btn--outline" target="_blank">Source Code</a>
+        <a href="https://flasher.sigurdos.dev" class="btn">Flash Your T-Deck</a>
+        <a href="https://github.com/hermes-gadget/SigurdOS-tdeck/releases" class="btn btn--outline" target="_blank">Download Binary</a>
+        <a href="https://github.com/hermes-gadget/SigurdOS-tdeck" class="btn btn--outline" target="_blank">Source Code</a>
       </div>
     </div>
   </section>
@@ -512,7 +512,7 @@
  ____) | |___| |__| | |    | |__| |____) |
 |_____/|______\____/|_|     \____/|_____/</span>
 
-<span class="green">[boot]</span> === SlopOS T-Deck ready ===
+<span class="green">[boot]</span> === SigurdOS T-Deck ready ===
 <span class="dim">  Uptime: 3d 14h 22m  |  Nodes: 12  |  Mesh: OK
   RSSI: -72 dBm  |  SNR: 8.2  |  Battery: 84%</span></div>
   </div>
@@ -550,7 +550,7 @@
     <div class="container">
       <h2>Features</h2>
       <p class="section__intro">
-        SlopOS packs a full mesh communication stack into a pocket-sized device.
+        SigurdOS packs a full mesh communication stack into a pocket-sized device.
         Every feature is built from the ground up for off-grid use.
       </p>
       <div class="feature-grid">
@@ -619,7 +619,7 @@
           <span class="feature-card__icon">&#x1F4F1;</span>
           <h3>Flutter Mobile Client</h3>
           <p>
-            Connect your phone or desktop to the mesh via BLE, USB, or TCP using the SlopOS Client
+            Connect your phone or desktop to the mesh via BLE, USB, or TCP using the SigurdOS Client
             &mdash; a full Flutter app with the same pixel theme. Read messages, manage channels,
             and browse contacts without the T-Deck display.
           </p>
@@ -654,7 +654,7 @@
     <div class="container">
       <h2>Technical Specs</h2>
       <p class="section__intro">
-        Built for the LilyGo T-Deck, SlopOS pushes the ESP32-S3 to its limits
+        Built for the LilyGo T-Deck, SigurdOS pushes the ESP32-S3 to its limits
         while leaving room for expansion.
       </p>
       <div class="spec-grid">
@@ -736,10 +736,10 @@
             Channel removal from UI with delete buttons, contact removal with confirmation dialog,
             reset path to a contact from contact detail screen, auto-scroll chat to new messages only when at bottom,
             NAV serial command for remote programmatic screen navigation,
-            SlopOS_TDeck_remote_test_radio hybrid build (test controller + full LoRa mesh),
+            SigurdOS_TDeck_remote_test_radio hybrid build (test controller + full LoRa mesh),
             chat channel list layout fixes (scrollbars, overlap, preview truncation),
             map tile discovery overflow fix, HAL driver layer bug fixes (7 issues),
-            mesh and UI layer bug fixes (10 issues), guard display serial reader behind !SLOPOS_REMOTE_TEST,
+            mesh and UI layer bug fixes (10 issues), guard display serial reader behind !SIGURDOS_REMOTE_TEST,
             allocate map canvas from PSRAM first to reduce boot heap pressure,
             use-after-free fix in Reset Path button (strdup + LV_EVENT_DELETE),
             DM conversation history restored on reboot via pseudo-channels,
@@ -862,7 +862,7 @@
 
       </div>
       <div style="text-align:center;margin-top:32px;">
-        <a href="https://github.com/hermes-gadget/SlopOS-tdeck/releases" class="btn btn--outline" target="_blank">View All Releases</a>
+        <a href="https://github.com/hermes-gadget/SigurdOS-tdeck/releases" class="btn btn--outline" target="_blank">View All Releases</a>
       </div>
     </div>
   </section>
@@ -872,30 +872,30 @@
     <div class="container">
       <h2>Ecosystem</h2>
       <p class="section__intro">
-        SlopOS is more than firmware. The full ecosystem gives you everything you need
+        SigurdOS is more than firmware. The full ecosystem gives you everything you need
         to build, flash, and interact with your mesh network.
       </p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;">
 
         <div style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">SlopOS-TDeck</div>
+          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">SigurdOS-TDeck</div>
           <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
             The main firmware. Full LVGL GUI on the LilyGo T-Deck with chat, maps, mesh networking,
             and all 15 screens. Flashed via web browser or esptool.
           </p>
           <p style="margin-top:12px;">
-            <a href="https://github.com/hermes-gadget/SlopOS-tdeck" target="_blank">GitHub &rarr;</a>
+            <a href="https://github.com/hermes-gadget/SigurdOS-tdeck" target="_blank">GitHub &rarr;</a>
           </p>
         </div>
 
         <div style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">SlopOS Client</div>
+          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">SigurdOS Client</div>
           <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
             A Flutter mobile and desktop app that connects to your mesh over BLE, USB serial, or TCP.
             Same pixel theme. Read messages, browse contacts, manage channels remotely.
           </p>
           <p style="margin-top:12px;">
-            <a href="https://github.com/hermes-gadget/SlopOS-client" target="_blank">GitHub &rarr;</a>
+            <a href="https://github.com/hermes-gadget/SigurdOS-client" target="_blank">GitHub &rarr;</a>
           </p>
         </div>
 
@@ -906,7 +906,7 @@
             Flash, configure radio settings, and verify device status from one page.
           </p>
           <p style="margin-top:12px;">
-            <a href="https://flasher.slopos.xyz">flasher.slopos.xyz &rarr;</a>
+            <a href="https://flasher.sigurdos.dev">flasher.sigurdos.dev &rarr;</a>
           </p>
         </div>
 
@@ -930,7 +930,7 @@
     <div class="container">
       <h2>Map Tiles <span style="font-family:'Pixelify Sans',sans-serif;font-size:14px;color:var(--accent-orange);vertical-align:middle;">ALPHA</span></h2>
       <p class="section__intro">
-        SlopOS supports offline tile maps on the T-Deck. Generate tiles right in your browser
+        SigurdOS supports offline tile maps on the T-Deck. Generate tiles right in your browser
         and download them as a zip &mdash; no Python scripts, no server-side processing.
         Just pan to your area, select zoom levels, and download.
       </p>
@@ -1026,14 +1026,14 @@
     <div class="container" style="text-align:center;">
       <h2>Contributors</h2>
       <p class="section__intro" style="margin:0 auto;">
-        Open source is built by people (and sometimes bots). Everyone who contributes to SlopOS
+        Open source is built by people (and sometimes bots). Everyone who contributes to SigurdOS
         gets a place here.
       </p>
       <div class="contributors__grid" id="contributors-grid">
         <div style="color:var(--text-muted);font-size:14px;">Loading contributors...</div>
       </div>
       <div style="margin-top:24px;">
-        <a href="https://github.com/hermes-gadget/SlopOS-tdeck/blob/dev/CONTRIBUTING.md" class="btn btn--outline" target="_blank">Add Your Name</a>
+        <a href="https://github.com/hermes-gadget/SigurdOS-tdeck/blob/dev/CONTRIBUTING.md" class="btn btn--outline" target="_blank">Add Your Name</a>
       </div>
     </div>
   </section>
@@ -1046,8 +1046,8 @@
         Flash your T-Deck in under two minutes. No account. No tools to install.
         Just a browser and a USB cable.
       </p>
-      <a href="https://flasher.slopos.xyz" class="btn">Flash Your Device</a>
-      <a href="https://github.com/hermes-gadget/SlopOS-tdeck/blob/dev/CONTRIBUTING.md" class="btn btn--outline" target="_blank">Contribute</a>
+      <a href="https://flasher.sigurdos.dev" class="btn">Flash Your Device</a>
+      <a href="https://github.com/hermes-gadget/SigurdOS-tdeck/blob/dev/CONTRIBUTING.md" class="btn btn--outline" target="_blank">Contribute</a>
       <p class="footnote">
         Everything is open source. GPL-3.0 licensed.
         Built for the mesh community.
@@ -1059,13 +1059,13 @@
   <footer class="footer">
     <div class="container">
       <p>
-        SlopOS is not affiliated with LilyGo or Espressif Systems.
+        SigurdOS is not affiliated with LilyGo or Espressif Systems.
         Built with <span class="heart">&#x2665;</span> by the mesh community.
       </p>
       <div class="footer__links">
-        <a href="https://github.com/hermes-gadget/slopos.xyz" target="_blank">Site Source</a>
-        <a href="https://github.com/hermes-gadget/SlopOS-tdeck" target="_blank">Firmware</a>
-        <a href="https://github.com/hermes-gadget/SlopOS-client" target="_blank">Client</a>
+        <a href="https://github.com/hermes-gadget/sigurdos.dev" target="_blank">Site Source</a>
+        <a href="https://github.com/hermes-gadget/SigurdOS-tdeck" target="_blank">Firmware</a>
+        <a href="https://github.com/hermes-gadget/SigurdOS-client" target="_blank">Client</a>
         <a href="https://github.com/hermes-gadget" target="_blank">GitHub Org</a>
       </div>
     </div>
@@ -1074,7 +1074,7 @@
 <script>
 // Auto-update version tag + contributors from GitHub
 (async function() {
-  const owner = 'hermes-gadget', repo = 'SlopOS-tdeck';
+  const owner = 'hermes-gadget', repo = 'SigurdOS-tdeck';
   try {
     const vr = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases?per_page=1`);
     const releases = await vr.json();
@@ -1279,7 +1279,7 @@
       zip.generateAsync({ type: 'blob' }).then(function(zipBlob) {
         var a = document.createElement('a');
         a.href = URL.createObjectURL(zipBlob);
-        a.download = 'slopos-tiles-z' + minZ + '-z' + maxZ + '.zip';
+        a.download = 'sigurdos-tiles-z' + minZ + '-z' + maxZ + '.zip';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
