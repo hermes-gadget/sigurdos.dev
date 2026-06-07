@@ -702,6 +702,15 @@
 
         <div class="tl-item">
           <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.40 RC2</div>
+          <div class="tl-item__date">June 7, 2026</div>
+          <div class="tl-item__desc">
+            RC2 release candidate: companion BLE bridge with persistent message store and Bluetooth settings UI, upstream RegionMap integration for flood-scope gating, private per-chat scopes via Alt+C menu, OTA firmware update with branch selection (main/dev/latest) and pre-release support, Latin-extended text rendering and raw T-Deck keyboard input, MAX_CONTACTS expanded from 64 to 350 with heap allocation, RC2 build identity reporting with automated build metadata capture, CI hardened to run tests on every PR and produce single unified firmware (BLE now the default), submodule URL migrated to meshcore-dev/MeshCore for CI compatibility. Bug fixes: Public channel visibility preservation, DM crash from Heard/Contacts, PIN unlock crash (3 bugs), companion message re-send prevention, large contact list support, OTA screen incremental update fix, custom RF settings NVS persistence, EMJI_DATA_H include guard typo fix. Code audit expansion with 45+ test PRs covering chat message cap, onboarding validation, splash timing, emoji font wiring and list integrity, lodepng allocator fallback, prefs sentinel defaults, navigation screen inventory, mesh/HAL/UI/input/OTA public contracts, responsive layout helpers, QR canvas bounds, map math helpers, battery conversion, SD card paths, touch parser, buzzer patterns, debug levels, remote setrf parsing, region file counts, GPIO mask helpers, telemetry protocol, WiFi scan ordering, tile cache boundaries, trackball direction filtering, heartbeat ring indexing, crash backtrace bounds, task watermark output, packet log null guards. GPS default changed to disabled (privacy/battery), delay() removed before ESP.restart() in LVGL event handlers.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
           <div class="tl-item__version">beta-0.1.39 RC1</div>
           <div class="tl-item__date">June 3, 2026</div>
           <div class="tl-item__desc">
