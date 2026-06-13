@@ -702,6 +702,15 @@
 
         <div class="tl-item">
           <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.41 RC3</div>
+          <div class="tl-item__date">June 13, 2026</div>
+          <div class="tl-item__desc">
+            RC3 release candidate: code audit fixes for uninitialised PendingAck table members (zero-initialise all fields with in-class defaults + 5 new contract tests) and per-page ContactInfo stack buffers moved to heap (1.8 KB → new(std::nothrow) with guards on all exit paths). Boot sequence polish: splash screen shown before startup work, flash writes settled before ESP.restart(), unconditional boot banner removed. Hardware: I2C arbitration between GT911 touch and keyboard resolved, battery calibration switched to analogReadMilliVolts, NVS fully wiped on factory reset via nvs_flash_erase(), trackball blocked during PIN entry to prevent back-swipe bypass, PSRAM fallback added to LVGL memory pool, SPI2_HOST bus consolidated into shared singleton, SignalSample key widened to 4 bytes to prevent RSSI/SNR aliasing, channel message buffer capacity clamped to prevent OOB, Serial.printf non-blocking guard prevents TX deadlock, display init failure now triggers restart instead of hanging. Launcher compatibility: runtime detection confirmed with otadata, screen-load animation removed (prevented LVGL re-entry corruption), I2C keyboard retry loop for warm-handoff, Phase 1 artifact audit + Phase 4 code/CI/docs integration. Refactoring: screens.cpp split into per-screen modules (Advertise, Signal, Packets, plus remaining 11 screens + screens_common extraction, T14–T18), contact persistence extracted into testable module (T8a) and file format versioned with magic header + bounds (T8b), logging macros introduced (header + pilot, T9), non-blocking buzzer pattern playback added (T12), WiFi status update interval-gated per-loop (T11), blocking wifi_sta::connect() deprecated (T3), library versions pinned exactly (T1), .clang-format config added (T2), post-roadmap regression pass and roadmap status sweep (T26), source hygiene (duplicate include + boot-step renumbering, T4). CI: firmware compiled on every PR (T20), release checksums + version-consistency check (T22), nightly env smoke matrix (T24), static analysis + logging-policy grep in PR CI as advisory (T23), workflows aligned for Python version + cache (T21). Documentation: 8 doc PRs refreshing drifted docs, retiring completed telemetry plans, hardening codebase improvement roadmap, adding Launcher compatibility roadmap with status updates and known issues, and documenting crash handler backtrace limitation.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
           <div class="tl-item__version">beta-0.1.40 RC2</div>
           <div class="tl-item__date">June 7, 2026</div>
           <div class="tl-item__desc">
