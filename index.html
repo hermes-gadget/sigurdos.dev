@@ -702,6 +702,15 @@
 
         <div class="tl-item">
           <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.43 RC5</div>
+          <div class="tl-item__date">June 28, 2026</div>
+          <div class="tl-item__desc">
+            RC5 release candidate: companion bridge completed with fixed channel slots and slot clearing, companion settings, telemetry, flood scope, and login frames, USB serial companion transport, per-message delivery tracking, crypto state reload after private-key import, and bridge signing state cleared on BLE disconnect. Mesh: missing upstream command families and advert path semantics added. Security: random per-device BLE PIN replaces hardcoded 123456, BLE PIN decoupled from screen-lock device_pin, PIN grace timing switched from mesh epoch to millis(), WebServer security patches hardened with OTA CSRF protection. Build: Espressif32 platform upgraded 6.11.0 → 7.0.1, intelhex pip install for merge_bin CI fix. Hardware: I2C clock consolidated into shared init at 400 kHz, SD card zero-length write support with display boot loop recovery, click button deadtime enforcement. Storage: atomic rename for message store updates, save_counter modulo arithmetic for 22-day persistence gap fix, 4-byte blob key prefix to prevent hash collisions, SPIFFS.begin(false) and nvs_flash_erase removal from factory reset. UI: input and small-screen reliability improvements, lv_obj_del_async() with lv_obj_is_valid() guard in chat screen, orphaned UTF-8 multi-byte start byte stripping, contact/channel names URL-encoded in MeshCore QR share URIs, sender timestamp for incoming messages, trace timer UAF fix on rapid contact taps, battery div-by-zero guard. Docs: companion compatibility audit, OTA CSRF audit.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
           <div class="tl-item__version">beta-0.1.42 RC4</div>
           <div class="tl-item__date">June 20, 2026</div>
           <div class="tl-item__desc">
