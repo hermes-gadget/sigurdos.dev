@@ -705,7 +705,12 @@
           <div class="tl-item__version">beta-0.1.44 RC6</div>
           <div class="tl-item__date">July 12, 2026</div>
           <div class="tl-item__desc">
-            RC6 release candidate: three release blockers resolved — companion BLE logging migrated to SIG_LOG* macros (CI lint gate now green), all remaining LVGL auto_del=true screen-load sites eliminated (QR, PIN entry, Home) to prevent navigation deadlock, and keyboard permanently locked to CMD 0x04 key mode with raw matrix CMD 0x03 removed from production path. Storage: complete atomic persistence refactor — validated atomic replacement for identity, contacts, chat history, and channel NVS with transaction recovery, companion message transaction repair, dirty-only chat history checkpointing, O(1) file-open message lookup, and atomic-replace race elimination. Performance: PSRAM-backed double-buffered display with DMA push flush overlap, 12.8 KB DRAM reclaimed via lazy emergency buffer allocation, adaptive touch polling (10ms active / 50ms idle), per-channel bounded message buffer extraction. Mesh: companion BLE adapter extracted to own translation unit, receive-frame handoff synchronization, PONG numeric parsing bounded, advert blob validation. Security: OTA PIN brute-force rate limiting, companion device PIN range aligned with on-device 4-digit gate. Hardware: GT911 touch bounded re-init after I2C wedge, deep-sleep RTC GPIO guard, DIO flash mode verification, SPI FSPI fallback isolation, power wake transition short-circuit. UI: screen lifecycle LVGL pointer guard for all widgets, WiFi/OTA timer object-lifetime binding. CI: ASan/UBSan and static-analysis PR gates. Docs: artifact reconciliation, companion command support matrix. Housekeeping: low-severity fix batch (HW-002, DEAD-002/003/004, DOC-001, BUILD-001), mesh bug fixes (processAck indexing, sender_buf use-after-scope, GPS epoch conversion, WiFi icon UAF), unreferenced helpers removed.
+            <strong>Blockers resolved:</strong> BLE logging SIG_LOG* macros (CI green), auto_del=true screen-loads eliminated (QR, PIN, Home), keyboard locked to CMD 0x04<br>
+            <strong>Storage:</strong> Atomic persistence refactor — identity, contacts, chat, NVS with transaction recovery; dirty-only checkpointing, O(1) file-open lookup<br>
+            <strong>Performance:</strong> PSRAM double-buffered display + DMA flush, 12.8 KB DRAM reclaimed, adaptive touch polling<br>
+            <strong>Mesh/HW:</strong> Companion BLE adapter extracted, GT911 crash recovery, deep-sleep GPIO guard, SPI FSPI fallback<br>
+            <strong>Security:</strong> OTA PIN brute-force limit, companion PIN range aligned<br>
+            <strong>CI/Docs:</strong> ASan/UBSan + static-analysis gates, artifact docs, command support matrix
           </div>
         </div>
 
@@ -714,7 +719,13 @@
           <div class="tl-item__version">beta-0.1.43 RC5</div>
           <div class="tl-item__date">June 28, 2026</div>
           <div class="tl-item__desc">
-            RC5 release candidate: companion bridge completed with fixed channel slots and slot clearing, companion settings, telemetry, flood scope, and login frames, USB serial companion transport, per-message delivery tracking, crypto state reload after private-key import, and bridge signing state cleared on BLE disconnect. Mesh: missing upstream command families and advert path semantics added. Security: random per-device BLE PIN replaces hardcoded 123456, BLE PIN decoupled from screen-lock device_pin, PIN grace timing switched from mesh epoch to millis(), WebServer security patches hardened with OTA CSRF protection. Build: Espressif32 platform upgraded 6.11.0 → 7.0.1, intelhex pip install for merge_bin CI fix. Hardware: I2C clock consolidated into shared init at 400 kHz, SD card zero-length write support with display boot loop recovery, click button deadtime enforcement. Storage: atomic rename for message store updates, save_counter modulo arithmetic for 22-day persistence gap fix, 4-byte blob key prefix to prevent hash collisions, SPIFFS.begin(false) and nvs_flash_erase removal from factory reset. UI: input and small-screen reliability improvements, lv_obj_del_async() with lv_obj_is_valid() guard in chat screen, orphaned UTF-8 multi-byte start byte stripping, contact/channel names URL-encoded in MeshCore QR share URIs, sender timestamp for incoming messages, trace timer UAF fix on rapid contact taps, battery div-by-zero guard. Docs: companion compatibility audit, OTA CSRF audit.
+            <strong>Companion:</strong> Fixed channel slots + clearing, USB serial transport, per-message delivery tracking, crypto reload, random BLE PIN (per-device)<br>
+            <strong>Mesh:</strong> Missing upstream command families, advert path semantics<br>
+            <strong>Build:</strong> Espressif32 6.11.0 → 7.0.1, intelhex CI fix<br>
+            <strong>Hardware:</strong> I2C 400 kHz shared init, SD zero-length write recovery, click deadtime<br>
+            <strong>Storage:</strong> Atomic rename + save_counter modulo fix (22-day gap), 4-byte hash prefix, SPIFFS/nvs cleanup<br>
+            <strong>UI:</strong> lv_obj_del_async guard, UTF-8 stripping, URL-encoded QR URIs, sender timestamps, battery div-by-zero guard<br>
+            <strong>Security:</strong> WebServer OTA CSRF protection
           </div>
         </div>
 
@@ -723,7 +734,11 @@
           <div class="tl-item__version">beta-0.1.42 RC4</div>
           <div class="tl-item__date">June 20, 2026</div>
           <div class="tl-item__desc">
-            RC4 release candidate with 19 fixes and stability improvements. Hardware: QIO→DIO flash mode to prevent cold boot-loops on older T-Deck revisions, battery calibration switched to Li-ion discharge curve, trackball LEFT deadtime eliminated, BLE state ordering fixed. Mesh: static sender buffer race and path discovery race resolved, room server double-send and UTF-8 emoji truncation fixed, SPIFFS flash-before-reset and NVS write dedup, mesh channel-state corruption and WiFi OTA auth hardened. UI: theme change now refreshes current screen immediately, outgoing screen freed on navigation to stop LVGL pool leak and freeze, Settings back navigation restored, chart data, nav stack, trace timer, brightness, and search state fixes, map cache_clock reset on reinit, null guard on getRTCClock() in updateSignalSample. Storage: SD card lazy retry — single attempt at boot with on-demand retry. CI: debug and remote_test_radio builds added to PR matrix, P_LORA_* build flags for MeshCore visibility, MeshCore submodule updated to latest dev, Launcher warm-handoff freeze and settings crash resolved, SPIFFS warning spam eliminated, navigation hang (#672) fixed. Docs: HARDWARE.md inaccuracies corrected.
+            <strong>Hardware:</strong> QIO→DIO flash mode, Li-ion battery calibration, trackball LEFT deadtime, BLE ordering<br>
+            <strong>Mesh:</strong> Sender/path discovery races resolved, room double-send, UTF-8 emoji truncation, channel-state corruption<br>
+            <strong>UI:</strong> Theme refresh on change, outgoing screen freed (LVGL leak), Settings back nav restored, chart/nav/trace/brightness fixes<br>
+            <strong>Storage:</strong> SD card lazy retry — single boot attempt, on-demand retry<br>
+            <strong>CI:</strong> Debug + remote_test_radio in PR matrix, submodule updated, Launcher freeze fix, nav hang #672 fixed
           </div>
         </div>
 
@@ -732,7 +747,12 @@
           <div class="tl-item__version">beta-0.1.41 RC3</div>
           <div class="tl-item__date">June 13, 2026</div>
           <div class="tl-item__desc">
-            RC3 release candidate: code audit fixes for uninitialised PendingAck table members (zero-initialise all fields with in-class defaults + 5 new contract tests) and per-page ContactInfo stack buffers moved to heap (1.8 KB → new(std::nothrow) with guards on all exit paths). Boot sequence polish: splash screen shown before startup work, flash writes settled before ESP.restart(), unconditional boot banner removed. Hardware: I2C arbitration between GT911 touch and keyboard resolved, battery calibration switched to analogReadMilliVolts, NVS fully wiped on factory reset via nvs_flash_erase(), trackball blocked during PIN entry to prevent back-swipe bypass, PSRAM fallback added to LVGL memory pool, SPI2_HOST bus consolidated into shared singleton, SignalSample key widened to 4 bytes to prevent RSSI/SNR aliasing, channel message buffer capacity clamped to prevent OOB, Serial.printf non-blocking guard prevents TX deadlock, display init failure now triggers restart instead of hanging. Launcher compatibility: runtime detection confirmed with otadata, screen-load animation removed (prevented LVGL re-entry corruption), I2C keyboard retry loop for warm-handoff, Phase 1 artifact audit + Phase 4 code/CI/docs integration. Refactoring: screens.cpp split into per-screen modules (Advertise, Signal, Packets, plus remaining 11 screens + screens_common extraction, T14–T18), contact persistence extracted into testable module (T8a) and file format versioned with magic header + bounds (T8b), logging macros introduced (header + pilot, T9), non-blocking buzzer pattern playback added (T12), WiFi status update interval-gated per-loop (T11), blocking wifi_sta::connect() deprecated (T3), library versions pinned exactly (T1), .clang-format config added (T2), post-roadmap regression pass and roadmap status sweep (T26), source hygiene (duplicate include + boot-step renumbering, T4). CI: firmware compiled on every PR (T20), release checksums + version-consistency check (T22), nightly env smoke matrix (T24), static analysis + logging-policy grep in PR CI as advisory (T23), workflows aligned for Python version + cache (T21). Documentation: 8 doc PRs refreshing drifted docs, retiring completed telemetry plans, hardening codebase improvement roadmap, adding Launcher compatibility roadmap with status updates and known issues, and documenting crash handler backtrace limitation.
+            <strong>Audit fixes:</strong> PendingAck zero-initialised (in-class defaults + 5 tests), ContactInfo stack→heap (1.8 KB)<br>
+            <strong>Boot:</strong> Splash before startup, flash settle before ESP.restart(), boot banner removed<br>
+            <strong>Hardware:</strong> I2C touch vs keyboard arbitration, analogReadMilliVolts, NVS full wipe, trackball blocked during PIN, LVGL PSRAM fallback, Serial.printf non-blocking guard<br>
+            <strong>Launcher:</strong> Runtime detection (otadata), screen-load anim removed, I2C keyboard retry loop<br>
+            <strong>Refactoring:</strong> screens.cpp split into per-screen modules, contact persistence w/ magic header, logging macros, non-blocking buzzer<br>
+            <strong>CI:</strong> PR firmware compile, release checksums, nightly env smoke
           </div>
         </div>
 
@@ -741,185 +761,10 @@
           <div class="tl-item__version">beta-0.1.40 RC2</div>
           <div class="tl-item__date">June 7, 2026</div>
           <div class="tl-item__desc">
-            RC2 release candidate: companion BLE bridge with persistent message store and Bluetooth settings UI, upstream RegionMap integration for flood-scope gating, private per-chat scopes via Alt+C menu, OTA firmware update with branch selection (main/dev/latest) and pre-release support, Latin-extended text rendering and raw T-Deck keyboard input, MAX_CONTACTS expanded from 64 to 350 with heap allocation, RC2 build identity reporting with automated build metadata capture, CI hardened to run tests on every PR and produce single unified firmware (BLE now the default), submodule URL migrated to meshcore-dev/MeshCore for CI compatibility. Bug fixes: Public channel visibility preservation, DM crash from Heard/Contacts, PIN unlock crash (3 bugs), companion message re-send prevention, large contact list support, OTA screen incremental update fix, custom RF settings NVS persistence, EMJI_DATA_H include guard typo fix. Code audit expansion with 45+ test PRs covering chat message cap, onboarding validation, splash timing, emoji font wiring and list integrity, lodepng allocator fallback, prefs sentinel defaults, navigation screen inventory, mesh/HAL/UI/input/OTA public contracts, responsive layout helpers, QR canvas bounds, map math helpers, battery conversion, SD card paths, touch parser, buzzer patterns, debug levels, remote setrf parsing, region file counts, GPIO mask helpers, telemetry protocol, WiFi scan ordering, tile cache boundaries, trackball direction filtering, heartbeat ring indexing, crash backtrace bounds, task watermark output, packet log null guards. GPS default changed to disabled (privacy/battery), delay() removed before ESP.restart() in LVGL event handlers.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.39 RC1</div>
-          <div class="tl-item__date">June 3, 2026</div>
-          <div class="tl-item__desc">
-            Wireless connectivity and mesh protocol expansion: complete WiFi subsystem with station manager (AP scan, credential entry, auto-reconnect, NVS persistence), OTA firmware updates via GitHub Releases with connection cleanup stability fix, real-time connection status feedback UI, and buzzer driver for audio notification. New diagnostic screens — NodeStats (battery/uptime/airtime), Telemetry (CayenneLPP visualization), NodeStatus detail, WiFiNetworks site survey, and Settings subcategory screens (Radio, GPS, Display, System). Mesh protocol layer — REQ/RESPONSE framework for typed datagram exchange, ping with round-trip timing, path discovery with flood-force routing, trace route with results display, channel management (create/PSK/join), QR code contact and channel import, contact pubkey export and identity management, Ed25519 message signing, group data datagrams, anonymous messaging to pubkey, command response ring buffer (pushCmdResponse/pollCmdResponse), ACK tracking (registerAckedMessage/isMessageAcked), contact permissions (favourite/remove/reset path), contact/URI import (importContactByUri/addChannelByUri), signal history sparkline on Signal screen, live radio config with apply/revert, and repeater login with ACK/RSSI feedback. UI/UX polish: theme compliance audit (contrast ≥4.5:1, pixel conventions), home screen WiFi icon crash fix on screen delete, trackball/keyboard focus recovery on telemetry/stats screens.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.38</div>
-          <div class="tl-item__date">June 1, 2026</div>
-          <div class="tl-item__desc">
-            Phase 4 complete — full mesh application layer: generic binary-request framework with tagged response dispatch (Phase 4.1), status request with battery/uptime/airtime UI (Phase 4.2), telemetry request with CayenneLPP parsing and dedicated screen (Phase 4.3), path discovery with flood-force routing (Phase 4.4), repeater/room login with admin commands (Phase 4.5), room server message fetch (Phase 4.6), anonymous message send/receive by public key (Phase 4.7), group data datagrams (Phase 4.8). Runtime theme system with 6 presets and NVS persistence; organized settings into category sub-menus (Radio, GPS, Display, System); home screen DMs/ROOMS icons with chat/contacts filtering; contacts list persistence across reboots; dedicated repeater detail screen with login flow, password persistence, and favourite toggle; admin command terminal with live response polling; ACK timestamp fix; home screen icon improvements; PendingAck in_use fix and 4 unpersisted NodePrefs fields persisted; full ecosystem rebrand SlopOS to SigurdOS; AGENT_GUIDE.md and README updates.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.37</div>
-          <div class="tl-item__date">May 30, 2026</div>
-          <div class="tl-item__desc">
-            Theme system with 6 visual presets (Default Cyan, Midnight Blue, Forest Green, Sunset Orange, Royal Purple, Amber Glow) persistable to NVS,
-            settings organized into 4 category submenus (Radio/Mesh, GPS/Location, Display/UI, System),
-            home screen icons overhauled for distinct meaning (ADVERTISE=bell, TRACE=shuffle, SETUP=house),
-            contacts list persists across reboots and SPIFFS re-flashes,
-            per-contact RSSI/SNR history with sparkline chart,
-            message search in chat history,
-            message delivery status (ACK ticks) with visible checkmark in chat bubbles,
-            custom variables key-value store,
-            auto-add contact type config with per-type bitmask filter,
-            GPS enable/read-interval controls,
-            SlopMeshV2 cutover as default mesh implementation,
-            auto-scroll chat to new messages only when at bottom,
-            PendingAck in_use default initializer fixes ACK tracking corruption on heap reuse,
-            4 NodePrefs fields (gps_enabled, gps_interval, autoadd_config, autoadd_max_hops) now persisted to NVS,
-            ACK checkmark visibility fixes (white timestamp color, periodic UI refresh, unicode glyph),
-            DM channel delete button hidden for synthetic entries,
-            UI cleanup removing #channels top bar, eye icon, scrollbars,
-            chat channel list layout fixes,
-            all 298 native tests passing, 5-minute stability soak passes,
-            firmware builds and CI passes at 1,320,592 bytes.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.36</div>
-          <div class="tl-item__date">May 29, 2026</div>
-          <div class="tl-item__desc">
-            Channel removal from UI with delete buttons, contact removal with confirmation dialog,
-            reset path to a contact from contact detail screen, auto-scroll chat to new messages only when at bottom,
-            NAV serial command for remote programmatic screen navigation,
-            SigurdOS_TDeck_remote_test_radio hybrid build (test controller + full LoRa mesh),
-            chat channel list layout fixes (scrollbars, overlap, preview truncation),
-            map tile discovery overflow fix, HAL driver layer bug fixes (7 issues),
-            mesh and UI layer bug fixes (10 issues), guard display serial reader behind !SIGURDOS_REMOTE_TEST,
-            allocate map canvas from PSRAM first to reduce boot heap pressure,
-            use-after-free fix in Reset Path button (strdup + LV_EVENT_DELETE),
-            DM conversation history restored on reboot via pseudo-channels,
-            sendTrace() passes correct path_len to sendDirect(),
-            NVS node_name temp buffer preserves defaults on fresh flash,
-            dynamic fallback display buffer instead of 51 KB static DRAM allocation,
-            LORA_TX_PWR build flag actually controls TX power,
-            code cleanup batch from Claude Opus 4.8 audit info items,
-            refresh_channels() stack arrays moved to static storage (1.9KB stack to BSS),
-            terminal command input buffers made static in LV_EVENT_READY lambda,
-            emergency LVGL draw buffer fallback when PSRAM and DRAM both fail,
-            ROADMAP.md added with full implementation plan across all phases,
-            remote_test_radio build for bidirectional LoRa testing,
-            all 298 native tests passing, full duplex radio confirmed, 5-minute stability soak passes.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.35</div>
-          <div class="tl-item__date">May 28, 2026</div>
-          <div class="tl-item__desc">
-            Contact details screen with full contact info (name, type, RSSI, SNR, last seen, GPS, path),
-            two-column Signal screen layout, iOS-style signal dots replacing block-style bars,
-            chat scroll clamping at first/last message boundaries, LVGL focus indicator styling (blue ACCENT on textareas),
-            radio stays powered when unconfigured (boot-time holding in SX1262 reset),
-            radio setup warning in home top bar, cache scan_y_range results to halve map tile discovery SD ops during boot,
-            setrf/reboot/advert serial test commands for remote testing,
-            KNOWN_ISSUES.md cleanup with systematic verification of all open entries,
-            MISSING_FEATURES.md audit and alignment with MeshCore companion protocol reality
-            (15 stale entries removed, fix ACK hash algorithm discrepancy, add auto-add contact configuration and custom variables entries).
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.34</div>
-          <div class="tl-item__date">May 27, 2026</div>
-          <div class="tl-item__desc">
-            Phase 0 complete: display brightness control, auto-backlight timeout (Off/15s/30s/1m/2m),
-            graceful shutdown from Settings, unread message badges on home screen,
-            flood max hops setting, GPS location sharing policy toggle, contact SNR display,
-            TX/RX delay tuning (RX delay base, TX delay factor, Direct TX delay),
-            TX/RX airtime display and packet statistics on Signal screen,
-            GPS clock sync on first valid fix, PSK channel import via Add Channel dialog,
-            radio reception hardening (SPI2_HOST fix, channel hash comparison fix),
-            debug/test infrastructure improvements, and preventative receive pipeline hardening.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.33</div>
-          <div class="tl-item__date">May 27, 2026</div>
-          <div class="tl-item__desc">
-            Contacts overhaul: dedicated REPEATERS/CONTACTS/FINDER screens with Ping Nearby (zero-hop probe),
-            per-feature debug flags with independent compile-time and runtime control,
-            signal bars widget (1–5 pixel-art RSSI indicator), universal trackball back-swipe,
-            GPS NMEA validation and empty-field fixes, I2C clock speed per-device (touch 400kHz / keyboard 100kHz),
-            SPI2_HOST display fix for GPIO matrix conflict with mesh/SD, touch polling fix, radio init fixes,
-            race condition and crash fixes, CI pipeline for firmware build and tests,
-            comprehensive feature documentation for all screens, and MISSING_FEATURES.md with phased implementation plan.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.32</div>
-          <div class="tl-item__date">May 24, 2026</div>
-          <div class="tl-item__desc">
-            Offline map tile rendering from SD card (auto-center, PSRAM cache, touch pan, /tiles/ path),
-            Custom RF parameters editor with dial controls and exclusive frequency presets,
-            configurable chat message history cap with persistence, Packets screen (raw packet log replacing Heard),
-            screen tearing fix with chat input/scroll limits, theme contrast fixes for Contacts/Trace + tap-opens-DM,
-            MeshCore character limit enforcement in UI inputs, channel string formatting hardening,
-            advertise status cooldown, and centered radio setup screen layout.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.31</div>
-          <div class="tl-item__date">May 24, 2026</div>
-          <div class="tl-item__desc">
-            Emoji support with picker dialog, channel and message persistence across reboots,
-            onboarding wizard, web flasher compatibility fix, and keyboard backlight auto-off.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.30</div>
-          <div class="tl-item__date">May 23, 2026</div>
-          <div class="tl-item__desc">
-            Keyboard backlight control with brightness slider, hashtag-based channel creation,
-            CONTRIBUTING.md for open source contributors, and radio init reliability improvements.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.29</div>
-          <div class="tl-item__date">May 23, 2026</div>
-          <div class="tl-item__desc">
-            Map tile rendering overhaul with PSRAM canvas, LRU tile cache, pan and zoom controls.
-            SD card HAL module for tile storage. Web flasher manifest generation in CI.
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.28</div>
-          <div class="tl-item__date">May 22, 2026</div>
-          <div class="tl-item__desc">
-            Responsive layout system for display-size-agnostic UI. Radio Setup screen with
-            frequency presets. Codex deep audit with 8 critical fixes including GPS parser
-            off-by-one, mesh text safety, and trace buffer overflow.
+            <strong>Features:</strong> Companion BLE bridge w/ persistent store, RegionMap flood-scope, per-chat scopes (Alt+C), OTA w/ branch selection, Latin-extended text, 350 contacts<br>
+            <strong>Bug fixes:</strong> Public channel visibility, DM/PIN unlock crashes (×4), companion re-send, RF settings persistence<br>
+            <strong>Code audit:</strong> 45+ test PRs — chat cap, onboarding, splash, emoji, lodepng, prefs, navigation, contract coverage, layout, QR, map, battery, SD, touch, buzzer, debug, telemetry, WiFi<br>
+            <strong>Defaults:</strong> GPS disabled by default (privacy/battery), delay() removed before ESP.restart()
           </div>
         </div>
 
