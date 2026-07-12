@@ -61,18 +61,19 @@
       top: 0;
       z-index: 100;
     }
-    .topbar .container { display: flex; align-items: center; }
+    .topbar .container { display: flex; align-items: center; position: relative; }
     .topbar__brand {
       font-family: 'Press Start 2P', monospace;
       font-size: 16px;
       color: var(--accent);
-      flex: 1;
     }
     .topbar__brand span { color: #444; }
     .topbar__nav {
-      flex: 1;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
       display: flex;
-      justify-content: center;
       gap: 24px;
       align-items: center;
     }
@@ -91,10 +92,9 @@
       text-decoration: none;
     }
     .topbar__actions {
-      flex: 1;
+      margin-left: auto;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
       gap: 12px;
     }
     .btn-flash {
