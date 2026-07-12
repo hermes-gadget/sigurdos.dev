@@ -66,7 +66,7 @@
       font-family: 'Press Start 2P', monospace;
       font-size: 16px;
       color: var(--accent);
-      flex-shrink: 0;
+      flex: 1;
     }
     .topbar__brand span { color: #444; }
     .topbar__nav {
@@ -91,9 +91,10 @@
       text-decoration: none;
     }
     .topbar__actions {
-      flex-shrink: 0;
+      flex: 1;
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 12px;
     }
     .btn-flash {
