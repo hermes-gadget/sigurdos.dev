@@ -61,14 +61,21 @@
       top: 0;
       z-index: 100;
     }
-    .topbar .container { display: flex; align-items: center; justify-content: space-between; }
+    .topbar .container { display: flex; align-items: center; }
     .topbar__brand {
       font-family: 'Press Start 2P', monospace;
       font-size: 16px;
       color: var(--accent);
+      flex-shrink: 0;
     }
     .topbar__brand span { color: #444; }
-    .topbar__nav { display: flex; gap: 24px; align-items: center; }
+    .topbar__nav {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      align-items: center;
+    }
     .topbar__nav a {
       font-family: 'Press Start 2P', monospace;
       font-size: 9px;
@@ -83,14 +90,26 @@
       border-color: var(--accent);
       text-decoration: none;
     }
-    .topbar__nav .btn-flash {
+    .topbar__actions {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-flash {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      text-transform: uppercase;
       background: var(--accent);
       color: #0A0A0A;
-      border-color: var(--accent);
+      padding: 8px 16px;
+      border: var(--border-w) solid var(--accent);
+      transition: background 0.2s, color 0.2s;
     }
-    .topbar__nav .btn-flash:hover {
+    .btn-flash:hover {
       background: transparent;
       color: var(--accent);
+      text-decoration: none;
     }
 
     /* ── Hamburger (mobile) ────────────────────── */
@@ -522,11 +541,13 @@
         <a href="#specs">Specs</a>
         <a href="#releases">Releases</a>
         <a href="https://github.com/hermes-gadget" target="_blank">GitHub</a>
-        <a href="https://flasher.sigurdos.dev" class="btn-flash">Flash</a>
       </nav>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="topbar__actions">
+        <a href="https://flasher.sigurdos.dev" class="btn-flash">Flash</a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
   <div class="mobile-nav" id="mobileNav">
