@@ -702,6 +702,15 @@
 
         <div class="tl-item">
           <div class="tl-item__dot"></div>
+          <div class="tl-item__version">beta-0.1.44 RC6</div>
+          <div class="tl-item__date">July 12, 2026</div>
+          <div class="tl-item__desc">
+            RC6 release candidate: three release blockers resolved — companion BLE logging migrated to SIG_LOG* macros (CI lint gate now green), all remaining LVGL auto_del=true screen-load sites eliminated (QR, PIN entry, Home) to prevent navigation deadlock, and keyboard permanently locked to CMD 0x04 key mode with raw matrix CMD 0x03 removed from production path. Storage: complete atomic persistence refactor — validated atomic replacement for identity, contacts, chat history, and channel NVS with transaction recovery, companion message transaction repair, dirty-only chat history checkpointing, O(1) file-open message lookup, and atomic-replace race elimination. Performance: PSRAM-backed double-buffered display with DMA push flush overlap, 12.8 KB DRAM reclaimed via lazy emergency buffer allocation, adaptive touch polling (10ms active / 50ms idle), per-channel bounded message buffer extraction. Mesh: companion BLE adapter extracted to own translation unit, receive-frame handoff synchronization, PONG numeric parsing bounded, advert blob validation. Security: OTA PIN brute-force rate limiting, companion device PIN range aligned with on-device 4-digit gate. Hardware: GT911 touch bounded re-init after I2C wedge, deep-sleep RTC GPIO guard, DIO flash mode verification, SPI FSPI fallback isolation, power wake transition short-circuit. UI: screen lifecycle LVGL pointer guard for all widgets, WiFi/OTA timer object-lifetime binding. CI: ASan/UBSan and static-analysis PR gates. Docs: artifact reconciliation, companion command support matrix. Housekeeping: low-severity fix batch (HW-002, DEAD-002/003/004, DOC-001, BUILD-001), mesh bug fixes (processAck indexing, sender_buf use-after-scope, GPS epoch conversion, WiFi icon UAF), unreferenced helpers removed.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-item__dot"></div>
           <div class="tl-item__version">beta-0.1.43 RC5</div>
           <div class="tl-item__date">June 28, 2026</div>
           <div class="tl-item__desc">
