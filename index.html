@@ -356,6 +356,71 @@
     .cta-section .btn + .btn { margin-left: 14px; }
     .cta-section .footnote { margin-top: 28px; font-size: 12px; color: var(--text-muted); }
 
+    /* ── Screenshots Gallery ───────────────── */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .screenshot-grid__item {
+      background: var(--bg-card);
+      border: var(--border-w) solid var(--divider);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .screenshot-grid__item:hover {
+      border-color: var(--accent);
+    }
+    .screenshot-grid__item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+    .screenshot-grid__item .caption {
+      padding: 10px 14px;
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text-secondary);
+      border-top: var(--border-w) solid var(--divider);
+    }
+
+    /* ── Back to Top ──────────────────────────── */
+    #back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 44px;
+      height: 44px;
+      background: var(--accent);
+      color: #000;
+      border: 2px solid var(--accent);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    #back-to-top:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    @media (max-width: 720px) {
+      .screenshot-grid { grid-template-columns: repeat(2, 1fr); }
+      #back-to-top { bottom: 16px; right: 16px; width: 38px; height: 38px; font-size: 14px; }
+    }
+
     /* ── Footer ───────────────────────────────── */
     .footer {
       background: var(--bg-secondary);
@@ -453,6 +518,7 @@
       <div class="topbar__brand">SIGURDOS<span>.dev</span></div>
       <nav class="topbar__nav">
         <a href="#features">Features</a>
+        <a href="#screenshots">Screens</a>
         <a href="#specs">Specs</a>
         <a href="#releases">Releases</a>
         <a href="#ecosystem">Ecosystem</a>
@@ -466,6 +532,7 @@
   </header>
   <div class="mobile-nav" id="mobileNav">
     <a href="#features">Features</a>
+    <a href="#screenshots">Screens</a>
     <a href="#specs">Specs</a>
     <a href="#releases">Releases</a>
     <a href="#ecosystem">Ecosystem</a>
@@ -522,7 +589,7 @@
     <div class="container">
       <div class="stats-strip">
         <div class="stat-item">
-          <div class="stat-item__num">15</div>
+          <div class="stat-item__num">18</div>
           <div class="stat-item__label">Screens</div>
         </div>
         <div class="stat-item">
@@ -530,11 +597,11 @@
           <div class="stat-item__label">KB RAM</div>
         </div>
         <div class="stat-item">
-          <div class="stat-item__num">1.1</div>
+          <div class="stat-item__num">2.7</div>
           <div class="stat-item__label">MB Flash</div>
         </div>
         <div class="stat-item">
-          <div class="stat-item__num">172</div>
+          <div class="stat-item__num">532</div>
           <div class="stat-item__label">Unit Tests</div>
         </div>
         <div class="stat-item">
@@ -639,12 +706,60 @@
           <span class="feature-card__icon">&#x1F4BB;</span>
           <h3>Developer Friendly</h3>
           <p>
-            PlatformIO-based build system, 172+ native unit tests with hardware mocks,
+            PlatformIO-based build system, 532+ native unit tests with hardware mocks,
             CI/CD via GitHub Actions, CONTRIBUTING.md, and a web flasher for zero-tool
             firmware installation. Everything is GPL-3.0 and open for contributions.
           </p>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Screenshots ═══════════════════════ -->
+  <section class="section" id="screenshots">
+    <div class="container">
+      <h2>On-Device Screens</h2>
+      <p class="section__intro">
+        18 screens across the full mesh experience. Here's a look at the main ones.
+      </p>
+      <div class="screenshot-grid">
+        <div class="screenshot-grid__item">
+          <img src="img/home.png" alt="Home screen with icon grid" loading="lazy">
+          <div class="caption">Home — icon grid with signal, battery, unread badges</div>
+        </div>
+        <div class="screenshot-grid__item">
+          <img src="img/chat.png" alt="Multi-channel chat" loading="lazy">
+          <div class="caption">Chat — channels, DMs, emoji support</div>
+        </div>
+        <div class="screenshot-grid__item">
+          <img src="img/map.png" alt="Offline tile map" loading="lazy">
+          <div class="caption">Maps — offline tile rendering with pan/zoom</div>
+        </div>
+        <div class="screenshot-grid__item">
+          <img src="img/signal.png" alt="Signal analysis screen" loading="lazy">
+          <div class="caption">Signal — live RSSI/SNR with noise floor chart</div>
+        </div>
+        <div class="screenshot-grid__item">
+          <img src="img/network.png" alt="Network view" loading="lazy">
+          <div class="caption">Network — recently active mesh nodes</div>
+        </div>
+        <div class="screenshot-grid__item">
+          <img src="img/repeaters.png" alt="Repeater connectivity" loading="lazy">
+          <div class="caption">Repeaters — room servers with login status</div>
+        </div>
+        <div class="screenshot-grid__item">
+          <img src="img/contacts.png" alt="Contacts list" loading="lazy">
+          <div class="caption">Contacts — pubkey management, favourites, ping</div>
+        </div>
+        <div class="screenshot-grid__item">
+          <img src="img/channels.png" alt="Channel management" loading="lazy">
+          <div class="caption">Channels — create, join, PSK import</div>
+        </div>
+        <div class="screenshot-grid__item">
+          <img src="img/terminal.png" alt="Diagnostics terminal" loading="lazy">
+          <div class="caption">Terminal — admin commands, live response polling</div>
+        </div>
       </div>
     </div>
   </section>
@@ -789,7 +904,7 @@
           <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">SigurdOS-TDeck</div>
           <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
             The main firmware. Full LVGL GUI on the LilyGo T-Deck with chat, maps, mesh networking,
-            and all 15 screens. Flashed via web browser or esptool.
+            and 18 screens. Flashed via web browser or esptool.
           </p>
           <p style="margin-top:12px;">
             <a href="https://github.com/hermes-gadget/SigurdOS-tdeck" target="_blank">GitHub &rarr;</a>
@@ -963,6 +1078,9 @@
     </div>
   </div>
 
+  <!-- ═══ Back to Top ═══════════════════════ -->
+  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#x2191;</button>
+
   <!-- ═══ Footer ════════════════════════════ -->
   <footer class="footer">
     <div class="container">
@@ -980,6 +1098,12 @@
   </footer>
 
 <script>
+// Back-to-top button visibility
+const btt = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('visible', window.scrollY > 300);
+});
+
 // Auto-update version tag + contributors from GitHub
 (async function() {
   const owner = 'hermes-gadget', repo = 'SigurdOS-tdeck';
