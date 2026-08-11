@@ -1,5 +1,7 @@
 'use strict';
 
+// SPDX-License-Identifier: GPL-3.0-only
+
 // Back-to-top button visibility and action.
 const backToTop = document.getElementById('back-to-top');
 if (backToTop) {
@@ -7,46 +9,136 @@ if (backToTop) {
     backToTop.classList.toggle('visible', window.scrollY > 300);
   });
   backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   });
 }
 
 // Auto-update version tag + contributors from GitHub.
+const GITHUB_TIMEOUT_MS = 8000;
+const GITHUB_PROFILE_HOSTS = new Set(['github.com', 'www.github.com']);
+const GITHUB_AVATAR_HOSTS = new Set(['avatars.githubusercontent.com']);
+
+async function fetchGitHubJson(url) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), GITHUB_TIMEOUT_MS);
+  try {
+    const response = await fetch(url, {
+      headers: { Accept: 'application/vnd.github+json' },
+      signal: controller.signal,
+    });
+    if (!response.ok) {
+      throw new Error(`GitHub request failed: ${response.status}`);
+    }
+    return await response.json();
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+function setMetadataMessage(container, message) {
+  if (!container) return;
+  container.replaceChildren();
+  const messageElement = document.createElement('div');
+  messageElement.className = 'metadata-message';
+  messageElement.textContent = message;
+  container.append(messageElement);
+}
+
+function validatedHttpsUrl(value, allowedHosts) {
+  if (typeof value !== 'string') return null;
+  try {
+    const url = new URL(value);
+    if (url.protocol !== 'https:' || !allowedHosts.has(url.hostname.toLowerCase())) {
+      return null;
+    }
+    return url;
+  } catch (error) {
+    return null;
+  }
+}
+
+function createContributorCard(contributor) {
+  const login = typeof contributor?.login === 'string' ? contributor.login.trim() : '';
+  const profileUrl = validatedHttpsUrl(contributor?.html_url, GITHUB_PROFILE_HOSTS);
+  const avatarUrl = validatedHttpsUrl(contributor?.avatar_url, GITHUB_AVATAR_HOSTS);
+  const contributions = Number(contributor?.contributions);
+  if (
+    !login ||
+    !profileUrl ||
+    !avatarUrl ||
+    !Number.isFinite(contributions) ||
+    contributions < 0
+  ) {
+    return null;
+  }
+
+  avatarUrl.searchParams.set('s', '48');
+  const card = document.createElement('a');
+  card.href = profileUrl.href;
+  card.target = '_blank';
+  card.rel = 'noopener noreferrer';
+  card.className = 'contributor';
+
+  const avatar = document.createElement('img');
+  avatar.src = avatarUrl.href;
+  avatar.alt = login;
+  avatar.className = 'contributor__avatar';
+  avatar.width = 48;
+  avatar.height = 48;
+  avatar.loading = 'lazy';
+
+  const name = document.createElement('span');
+  name.className = 'contributor__name';
+  name.textContent = login;
+
+  const commits = document.createElement('span');
+  commits.className = 'contributor__commits';
+  const count = Math.floor(contributions);
+  commits.textContent = `${count} commit${count === 1 ? '' : 's'}`;
+
+  card.append(avatar, name, commits);
+  return card;
+}
+
 (async function loadGitHubMetadata() {
   const owner = 'hermes-gadget';
   const repo = 'SigurdOS-tdeck';
+  const versionStatus = document.getElementById('version-status');
   try {
-    const releaseResponse = await fetch(
+    const releases = await fetchGitHubJson(
       `https://api.github.com/repos/${owner}/${repo}/releases?per_page=1`,
     );
-    const releases = await releaseResponse.json();
-    if (releases && releases[0]) {
-      document.getElementById('version-text').textContent = releases[0].tag_name;
+    const latestRelease = Array.isArray(releases)
+      ? releases.find((release) => typeof release?.tag_name === 'string' && release.tag_name.trim())
+      : null;
+    if (!latestRelease) {
+      throw new Error('GitHub release response had no valid release');
     }
+    document.getElementById('version-text').textContent = latestRelease.tag_name;
+    if (versionStatus) versionStatus.textContent = '';
   } catch (error) {
-    // Keep the build-time release fallback in the page.
+    if (versionStatus) {
+      versionStatus.textContent = 'Live release data unavailable; showing the verified build fallback.';
+    }
   }
 
+  const grid = document.getElementById('contributors-grid');
   try {
-    const contributorResponse = await fetch(
+    const contributors = await fetchGitHubJson(
       `https://api.github.com/repos/${owner}/${repo}/contributors`,
     );
-    const contributors = await contributorResponse.json();
-    const grid = document.getElementById('contributors-grid');
-    if (contributors && contributors.length) {
-      grid.innerHTML = contributors.map((contributor) => `
-        <a href="${contributor.html_url}" target="_blank" class="contributor">
-          <img src="${contributor.avatar_url}&s=48" alt="${contributor.login}" class="contributor__avatar" width="48" height="48" loading="lazy">
-          <span class="contributor__name">${contributor.login}</span>
-          <span class="contributor__commits">${contributor.contributions} commit${contributor.contributions !== 1 ? 's' : ''}</span>
-        </a>
-      `).join('');
+    if (!Array.isArray(contributors)) {
+      throw new Error('GitHub contributor response was not an array');
+    }
+    const cards = contributors.map(createContributorCard).filter(Boolean);
+    if (cards.length) {
+      grid.replaceChildren(...cards);
     } else {
-      grid.innerHTML = '<div style="color:var(--text-muted);font-size:14px;">No contributors yet</div>';
+      setMetadataMessage(grid, 'Contributor data is currently unavailable.');
     }
   } catch (error) {
-    document.getElementById('contributors-grid').innerHTML =
-      '<div style="color:var(--text-muted);font-size:14px;">Could not load contributors</div>';
+    setMetadataMessage(grid, 'Could not load contributor data right now.');
   }
 }());
 
@@ -56,20 +148,25 @@ if (backToTop) {
   const navigation = document.getElementById('mobileNav');
   if (!button || !navigation) return;
 
+  const setNavigationState = (isOpen) => {
+    button.classList.toggle('active', isOpen);
+    navigation.classList.toggle('open', isOpen);
+    button.setAttribute('aria-expanded', String(isOpen));
+    navigation.setAttribute('aria-hidden', String(!isOpen));
+  };
+
+  setNavigationState(false);
   button.addEventListener('click', () => {
-    button.classList.toggle('active');
-    navigation.classList.toggle('open');
+    setNavigationState(!navigation.classList.contains('open'));
   });
   navigation.addEventListener('click', (event) => {
     if (event.target.tagName === 'A') {
-      button.classList.remove('active');
-      navigation.classList.remove('open');
+      setNavigationState(false);
     }
   });
   document.addEventListener('click', (event) => {
     if (!button.contains(event.target) && !navigation.contains(event.target)) {
-      button.classList.remove('active');
-      navigation.classList.remove('open');
+      setNavigationState(false);
     }
   });
 }());
@@ -117,12 +214,12 @@ if (backToTop) {
       tileStyle = 'dark';
       map.removeLayer(lightLayer);
       map.addLayer(darkLayer);
-      styleButton.innerHTML = '&#x1F319; Dark';
+      styleButton.textContent = '🌙 Dark';
     } else {
       tileStyle = 'light';
       map.removeLayer(darkLayer);
       map.addLayer(lightLayer);
-      styleButton.innerHTML = '&#x2600; Light';
+      styleButton.textContent = '☀ Light';
     }
   });
 }());

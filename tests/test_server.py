@@ -53,10 +53,15 @@ class SiteServerTests(unittest.TestCase):
             cls.server.wait(timeout=5)
 
     @classmethod
-    def request(cls, path: str, method: str = "GET") -> tuple[int, bytes, dict[str, str]]:
+    def request(
+        cls,
+        path: str,
+        method: str = "GET",
+        headers: dict[str, str] | None = None,
+    ) -> tuple[int, bytes, dict[str, str]]:
         connection = http.client.HTTPConnection("127.0.0.1", cls.port, timeout=5)
         try:
-            connection.request(method, path)
+            connection.request(method, path, headers=headers or {})
             response = connection.getresponse()
             headers = {name.lower(): value for name, value in response.getheaders()}
             return response.status, response.read(), headers
@@ -105,6 +110,20 @@ class SiteServerTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertIn(b"'use strict';", body)
         self.assertIn("javascript", headers["content-type"])
+
+        for path in ("/favicon.svg", "/favicon.ico", "/robots.txt", "/sitemap.xml"):
+            with self.subTest(path=path):
+                status, _, _ = self.request(path)
+                self.assertEqual(status, 200)
+
+    def test_legacy_host_redirects_to_canonical_host(self) -> None:
+        status, body, headers = self.request(
+            "/?source=legacy",
+            headers={"Host": "sigurdos.dev"},
+        )
+        self.assertEqual(status, 301)
+        self.assertEqual(headers["location"], "https://www.sigurdos.dev/?source=legacy")
+        self.assertEqual(body, b"")
 
     def test_tile_api_route_is_preserved(self) -> None:
         status, _, _ = self.request("/api/tile?z=1")
@@ -155,6 +174,8 @@ class SiteServerTests(unittest.TestCase):
         normalized_body = b" ".join(body.split())
         self.assertIn(b"beta-0.1.47-RC9", body)
         self.assertIn(b"1,587", body)
+        self.assertIn(b"as of August 11, 2026", body)
+        self.assertNotIn(b"SlopOS", body)
         self.assertNotIn(b"beta-0.1.44 RC6", body)
         self.assertNotIn(b"Every packet is encrypted with Ed25519", normalized_body)
         self.assertIn(b"Ed25519 authenticates identities and signatures", normalized_body)
@@ -163,6 +184,8 @@ class SiteServerTests(unittest.TestCase):
         self.assertIn(b"not every packet is encrypted", normalized_body)
         self.assertIn(b"tiles/&lt;z&gt;/&lt;x&gt;/&lt;y&gt;.png", normalized_body)
         self.assertNotIn(b".jpg", normalized_body)
+        _, javascript, _ = self.request("/site.js")
+        self.assertNotIn(b"innerHTML", javascript)
 
 
 if __name__ == "__main__":

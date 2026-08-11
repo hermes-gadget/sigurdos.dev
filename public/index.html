@@ -1,10 +1,23 @@
 <!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SigurdOS — open source mesh networking firmware</title>
   <meta name="description" content="SigurdOS is an open source mesh networking firmware ecosystem for the LilyGo T-Deck and compatible devices. Chat, map, and communicate off-grid.">
+  <link rel="canonical" href="https://www.sigurdos.dev/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sigurdos.dev/">
+  <meta property="og:title" content="SigurdOS — open source mesh networking firmware">
+  <meta property="og:description" content="Open source mesh communication firmware for the LilyGo T-Deck and compatible devices.">
+  <meta property="og:image" content="https://www.sigurdos.dev/img/sigurdos-banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SigurdOS — open source mesh networking firmware">
+  <meta name="twitter:description" content="Open source mesh communication firmware for the LilyGo T-Deck and compatible devices.">
+  <meta name="twitter:image" content="https://www.sigurdos.dev/img/sigurdos-banner.png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -32,7 +45,7 @@
       --accent-orange: #FAA61A;
       --text-primary: #EAEAEA;
       --text-secondary: #949BA4;
-      --text-muted: #5C6067;
+      --text-muted: #8B949E;
       --divider: #222222;
       --border-w: 2px;
     }
@@ -69,7 +82,7 @@
       font-size: 16px;
       color: var(--accent);
     }
-    .topbar__brand span { color: #444; }
+    .topbar__brand span { color: var(--text-muted); }
     .topbar__nav {
       position: absolute;
       left: 50%;
@@ -197,6 +210,13 @@
       color: var(--text-muted);
       margin-bottom: 24px;
     }
+    .metadata-status {
+      display: block;
+      margin-top: 8px;
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
     .hero .subtitle {
       font-size: 16px;
       color: var(--text-secondary);
@@ -252,7 +272,7 @@
       overflow-x: auto;
       white-space: pre;
     }
-    .terminal-art .dim { color: #444; }
+    .terminal-art .dim { color: var(--text-muted); }
     .terminal-art .green { color: var(--accent-green); }
     .terminal-art .red { color: var(--accent-red); }
 
@@ -335,6 +355,12 @@
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 1px;
+    }
+    .stats-as-of {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
     }
 
     /* ── Release timeline ──────────────────────── */
@@ -496,6 +522,10 @@
       font-size: 11px;
       color: var(--text-muted);
     }
+    .metadata-message {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
 
     /* ── Responsive ──────────────────────────── */
     @media (max-width: 720px) {
@@ -532,6 +562,15 @@
     .badge:nth-child(3) { animation-delay: 1s; }
     .badge:nth-child(4) { animation-delay: 1.5s; }
     .badge:nth-child(5) { animation-delay: 2s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -549,31 +588,36 @@
       </nav>
       <div class="topbar__actions">
         <a href="https://flasher.sigurdos.dev" class="btn-flash">Flash</a>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
+        <button class="hamburger" id="hamburger" aria-label="Menu" aria-controls="mobileNav" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
   </header>
-  <div class="mobile-nav" id="mobileNav">
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" aria-hidden="true">
     <a href="#features">Features</a>
     <a href="#screenshots">Screens</a>
     <a href="#specs">Specs</a>
     <a href="#releases">Releases</a>
     <a href="https://github.com/hermes-gadget" target="_blank">GitHub</a>
     <a href="https://flasher.sigurdos.dev" class="btn-flash">Flash</a>
-  </div>
+  </nav>
+
+  <main id="main-content">
 
   <!-- ═══ Banner ═══════════════════════════════ -->
   <div class="banner">
-    <img src="img/sigurdos-banner.png" alt="SigurdOS Banner" class="banner-img">
+    <picture>
+      <source srcset="img/sigurdos-banner.webp" type="image/webp">
+      <img src="img/sigurdos-banner.png" alt="SigurdOS mesh networking banner" class="banner-img" width="1916" height="821" decoding="async" fetchpriority="high">
+    </picture>
   </div>
 
   <!-- ═══ Hero ══════════════════════════════ -->
   <section class="hero">
     <div class="container">
       <h1>SIGURDOS</h1>
-      <p class="version-tag" id="version-tag">v <span id="version-text">beta-0.1.47-RC9</span></p>
+      <p class="version-tag" id="version-tag">v <span id="version-text">beta-0.1.47-RC9</span><span id="version-status" class="metadata-status" role="status" aria-live="polite"></span></p>
       <p class="subtitle">
         A fully open source firmware that turns the LilyGo T-Deck into a
         portable mesh communication device. Chat across your network, navigate
@@ -633,6 +677,7 @@
           <div class="stat-item__label">Site Code</div>
         </div>
       </div>
+      <p class="stats-as-of">Metrics verified against beta-0.1.47-RC9 — as of August 11, 2026.</p>
     </div>
   </div>
 
@@ -753,28 +798,28 @@
           <div class="caption">Chat — channels, DMs, emoji support</div>
         </div>
         <div class="screenshot-grid__item">
-          <img src="img/map.png" alt="Offline tile map" loading="lazy">
-          <div class="caption">Maps — offline tile rendering with pan/zoom</div>
+          <img src="img/map-preview.png" alt="Map screen showing an offline tile map" loading="lazy">
+          <div class="caption">Map — offline tile rendering with pan and zoom</div>
         </div>
         <div class="screenshot-grid__item">
           <img src="img/signal.png" alt="Signal analysis screen" loading="lazy">
           <div class="caption">Signal — live RSSI/SNR with noise floor chart</div>
         </div>
         <div class="screenshot-grid__item">
-          <img src="img/network.png" alt="Network view" loading="lazy">
-          <div class="caption">Network — recently active mesh nodes</div>
+          <img src="img/finder.png" alt="Finder screen with Ping Nearby control and discovered nodes" loading="lazy">
+          <div class="caption">Finder — discover nearby mesh nodes with Ping Nearby</div>
         </div>
         <div class="screenshot-grid__item">
-          <img src="img/repeaters.png" alt="Repeater connectivity" loading="lazy">
-          <div class="caption">Repeaters — room servers with login status</div>
+          <img src="img/repeaters.png" alt="Repeater list with connectivity and signal status" loading="lazy">
+          <div class="caption">Repeaters — repeater connectivity and signal status</div>
         </div>
         <div class="screenshot-grid__item">
           <img src="img/contacts.png" alt="Contacts list" loading="lazy">
           <div class="caption">Contacts — pubkey management, favourites, ping</div>
         </div>
         <div class="screenshot-grid__item">
-          <img src="img/channels.png" alt="Channel management" loading="lazy">
-          <div class="caption">Channels — create, join, PSK import</div>
+          <img src="img/channel-management.png" alt="Channel management screen with channel list and add-channel control" loading="lazy">
+          <div class="caption">Channels — create and join mesh channels, import a PSK</div>
         </div>
         <div class="screenshot-grid__item">
           <img src="img/terminal.png" alt="Diagnostics terminal" loading="lazy">
@@ -948,8 +993,8 @@
 
       </div>
 
-      <div id="tile-tool" style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
-        <h3 style="margin-bottom:16px;">Interactive Map</h3>
+      <div id="tile-tool" role="region" aria-labelledby="tile-tool-title" style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
+        <h3 id="tile-tool-title" style="margin-bottom:16px;">Interactive Map</h3>
 
         <div style="margin-bottom:14px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;">
           <div>
@@ -957,9 +1002,9 @@
           </div>
         </div>
 
-        <div id="tile-map" style="height:400px;border:var(--border-w) solid var(--divider);"></div>
-        <p style="margin-top:10px;font-size:11px;color:var(--text-muted);">
-          Pan and zoom to inspect an area. Only the tiles visible in the map are requested.
+        <div id="tile-map" role="region" aria-label="Interactive map preview" aria-describedby="tile-map-help" tabindex="0" style="height:400px;border:var(--border-w) solid var(--divider);"></div>
+        <p id="tile-map-help" role="status" aria-live="polite" style="margin-top:10px;font-size:11px;color:var(--text-muted);">
+          Use the zoom controls or keyboard focus to explore the map. Only tiles visible in the map are requested.
         </p>
       </div>
     </div>
@@ -984,7 +1029,7 @@
         gets a place here.
       </p>
       <div class="contributors__grid" id="contributors-grid">
-        <div style="color:var(--text-muted);font-size:14px;">Loading contributors...</div>
+        <div class="metadata-message">Loading contributors...</div>
       </div>
       <div style="margin-top:24px;">
         <a href="https://github.com/hermes-gadget/SigurdOS-tdeck/blob/dev/CONTRIBUTING.md" class="btn btn--outline" target="_blank">Add Your Name</a>
@@ -1008,6 +1053,8 @@
       </p>
     </div>
   </div>
+
+  </main>
 
   <!-- ═══ Back to Top ═══════════════════════ -->
   <button id="back-to-top" aria-label="Back to top">&#x2191;</button>
