@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 """SigurdOS Website Server - serves approved public files + proxies map tiles."""
 import http.server
 import mimetypes
@@ -11,18 +12,24 @@ import urllib.request
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 REPOSITORY_ROOT = Path(__file__).resolve().parent
 PUBLIC_ROOT = REPOSITORY_ROOT / "public"
+CANONICAL_HOST = "www.sigurdos.dev"
 PUBLIC_FILES = {
     "/": PUBLIC_ROOT / "index.html",
     "/index.html": PUBLIC_ROOT / "index.html",
     "/site.js": PUBLIC_ROOT / "site.js",
+    "/favicon.svg": PUBLIC_ROOT / "favicon.svg",
+    "/favicon.ico": PUBLIC_ROOT / "favicon.ico",
+    "/robots.txt": PUBLIC_ROOT / "robots.txt",
+    "/sitemap.xml": PUBLIC_ROOT / "sitemap.xml",
     "/img/chat.png": PUBLIC_ROOT / "img/chat.png",
-    "/img/map.png": PUBLIC_ROOT / "img/map.png",
+    "/img/map-preview.png": PUBLIC_ROOT / "img/map-preview.png",
     "/img/contacts.png": PUBLIC_ROOT / "img/contacts.png",
     "/img/repeaters.png": PUBLIC_ROOT / "img/repeaters.png",
-    "/img/channels.png": PUBLIC_ROOT / "img/channels.png",
-    "/img/network.png": PUBLIC_ROOT / "img/network.png",
+    "/img/channel-management.png": PUBLIC_ROOT / "img/channel-management.png",
+    "/img/finder.png": PUBLIC_ROOT / "img/finder.png",
     "/img/signal.png": PUBLIC_ROOT / "img/signal.png",
     "/img/sigurdos-banner.png": PUBLIC_ROOT / "img/sigurdos-banner.png",
+    "/img/sigurdos-banner.webp": PUBLIC_ROOT / "img/sigurdos-banner.webp",
     "/img/home.png": PUBLIC_ROOT / "img/home.png",
     "/img/terminal.png": PUBLIC_ROOT / "img/terminal.png",
 }
@@ -46,6 +53,21 @@ CONTENT_SECURITY_POLICY = "; ".join(
 )
 
 class SiteHandler(http.server.SimpleHTTPRequestHandler):
+    def _redirect_to_canonical_host(self):
+        request_host = self.headers.get("Host", "").split(":", 1)[0].lower()
+        if request_host != "sigurdos.dev":
+            return False
+
+        request = urllib.parse.urlsplit(self.path)
+        location = urllib.parse.urlunsplit(
+            ("https", CANONICAL_HOST, request.path, request.query, "")
+        )
+        self.send_response(301)
+        self.send_header("Location", location)
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+        return True
+
     def end_headers(self):
         self.send_header("Content-Security-Policy", CONTENT_SECURITY_POLICY)
         self.send_header("X-Content-Type-Options", "nosniff")
@@ -63,6 +85,8 @@ class SiteHandler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
     def do_GET(self):
+        if self._redirect_to_canonical_host():
+            return
         # Tile proxy: /api/tile?z={z}&x={x}&y={y}
         request = urllib.parse.urlsplit(self.path)
         if request.path == "/api/tile":
@@ -108,6 +132,8 @@ class SiteHandler(http.server.SimpleHTTPRequestHandler):
         self._serve_public_file(request.path, send_body=True)
 
     def do_HEAD(self):
+        if self._redirect_to_canonical_host():
+            return
         request_path = urllib.parse.urlsplit(self.path).path
         self._serve_public_file(request_path, send_body=False)
 

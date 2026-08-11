@@ -1,5 +1,7 @@
 # Third-party notices
 
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+
 The GPL-3.0-only grant in this repository applies to project-authored website
 code and assets. Third-party components and services retain their own licences
 and terms.
@@ -13,5 +15,11 @@ and terms.
   [OpenStreetMap tile usage policy](https://operations.osmfoundation.org/policies/tiles/).
 - The dark map preview uses CARTO basemap tiles and is governed by CARTO's
   attribution and service terms.
+- The screenshot gallery and SigurdOS banner are project-authored assets covered by
+  the project licence; device and manufacturer names shown in them remain trademarks
+  of their respective owners.
+- JSZip is not shipped or executed by the current site. The former offline ZIP
+  prefetcher was removed because the standard OpenStreetMap tile service does not
+  permit that use.
 
 The linked services and their content are not relicensed by this repository.

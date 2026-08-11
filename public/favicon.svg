@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>SigurdOS</title>
+  <rect width="64" height="64" rx="8" fill="#0A0A0A"/>
+  <path d="M46 14H22c-5 0-8 3-8 8s3 8 8 8h20c5 0 8 3 8 8s-3 8-8 8H18" fill="none" stroke="#00BFFF" stroke-width="7" stroke-linecap="square"/>
+</svg>
