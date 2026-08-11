@@ -652,7 +652,9 @@
           <p>
             Full Discord-style messaging with dynamic channel discovery, DM support, an emoji picker,
             and message history that survives power loss. MeshCore applies different security
-            properties to direct messages, channels, advertisements, and control traffic.
+            properties to direct messages, channels, advertisements, and control traffic. Group
+            messages use a shared channel key and do not authenticate an individual sender; not
+            every packet is encrypted.
           </p>
         </div>
 
@@ -674,6 +676,8 @@
             flood routing with ACKs, path-based direct messaging, and node discovery via periodic
             adverts. Ed25519 authenticates identities and signatures; it does not encrypt packets,
             and confidentiality depends on the MeshCore traffic type and channel configuration.
+            Group messages use a shared channel key, while advertisements and some control packets
+            are signed or unencrypted.
           </p>
         </div>
 
