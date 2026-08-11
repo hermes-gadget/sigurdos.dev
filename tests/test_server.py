@@ -152,11 +152,17 @@ class SiteServerTests(unittest.TestCase):
 
     def test_release_and_security_copy_are_current(self) -> None:
         _, body, _ = self.request("/")
+        normalized_body = b" ".join(body.split())
         self.assertIn(b"beta-0.1.47-RC9", body)
         self.assertIn(b"1,587", body)
         self.assertNotIn(b"beta-0.1.44 RC6", body)
-        self.assertNotIn(b"Every packet is encrypted with Ed25519", body)
-        self.assertIn(b"Ed25519 authenticates identities and signatures", body)
+        self.assertNotIn(b"Every packet is encrypted with Ed25519", normalized_body)
+        self.assertIn(b"Ed25519 authenticates identities and signatures", normalized_body)
+        self.assertIn(b"Group messages use a shared channel key", normalized_body)
+        self.assertIn(b"do not authenticate an individual sender", normalized_body)
+        self.assertIn(b"not every packet is encrypted", normalized_body)
+        self.assertIn(b"tiles/&lt;z&gt;/&lt;x&gt;/&lt;y&gt;.png", normalized_body)
+        self.assertNotIn(b".jpg", normalized_body)
 
 
 if __name__ == "__main__":
