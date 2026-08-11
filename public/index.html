@@ -573,7 +573,7 @@
   <section class="hero">
     <div class="container">
       <h1>SIGURDOS</h1>
-      <p class="version-tag" id="version-tag">v <span id="version-text">loading...</span></p>
+      <p class="version-tag" id="version-tag">v <span id="version-text">beta-0.1.47-RC9</span></p>
       <p class="subtitle">
         A fully open source firmware that turns the LilyGo T-Deck into a
         portable mesh communication device. Chat across your network, navigate
@@ -583,7 +583,7 @@
         <span class="badge">ESP32-S3</span>
         <span class="badge">LoRa Mesh</span>
         <span class="badge">LVGL v9</span>
-        <span class="badge">GPL-3.0</span>
+        <span class="badge">GPL-3.0-only</span>
         <span class="badge">Open Source</span>
       </div>
       <div class="btn-row">
@@ -613,24 +613,24 @@
     <div class="container">
       <div class="stats-strip">
         <div class="stat-item">
-          <div class="stat-item__num">18</div>
+          <div class="stat-item__num">22+</div>
           <div class="stat-item__label">Screens</div>
         </div>
         <div class="stat-item">
-          <div class="stat-item__num">14</div>
-          <div class="stat-item__label">KB RAM</div>
+          <div class="stat-item__num">RC9</div>
+          <div class="stat-item__label">Release</div>
         </div>
         <div class="stat-item">
           <div class="stat-item__num">2.7</div>
           <div class="stat-item__label">MB Flash</div>
         </div>
         <div class="stat-item">
-          <div class="stat-item__num">532</div>
+          <div class="stat-item__num">1,587</div>
           <div class="stat-item__label">Unit Tests</div>
         </div>
         <div class="stat-item">
-          <div class="stat-item__num">100%</div>
-          <div class="stat-item__label">Open Source</div>
+          <div class="stat-item__num">GPLv3</div>
+          <div class="stat-item__label">Site Code</div>
         </div>
       </div>
     </div>
@@ -651,8 +651,8 @@
           <h3>Multi-Channel Chat</h3>
           <p>
             Full Discord-style messaging with dynamic channel discovery, DM support, an emoji picker,
-            and message history that survives power loss. Send text across your mesh network to
-            individuals or channels &mdash; all with end-to-end encryption.
+            and message history that survives power loss. MeshCore applies different security
+            properties to direct messages, channels, advertisements, and control traffic.
           </p>
         </div>
 
@@ -660,9 +660,9 @@
           <span class="feature-card__icon">&#x1F5FA;&#xFE0F;</span>
           <h3>Offline Tile Maps</h3>
           <p>
-            Navigate with full offline JPEG tile maps stored on the SD card. Pan, zoom, and explore
-            without any network connection. Tile downloader for 18 UK city presets included.
-            Rendered directly to the display via the ESP32 hardware JPEG decoder.
+            Navigate with offline PNG tile maps stored on the SD card. Pan, zoom, and explore
+            without any network connection. The website map preview helps identify an area;
+            offline packages must come from a provider that permits offline use.
           </p>
         </div>
 
@@ -672,7 +672,8 @@
           <p>
             Built on MeshCore, a battle-tested LoRa mesh networking library. Automatic route discovery,
             flood routing with ACKs, path-based direct messaging, and node discovery via periodic
-            adverts. Every packet is encrypted with Ed25519 keys.
+            adverts. Ed25519 authenticates identities and signatures; it does not encrypt packets,
+            and confidentiality depends on the MeshCore traffic type and channel configuration.
           </p>
         </div>
 
@@ -720,9 +721,10 @@
           <span class="feature-card__icon">&#x1F4BB;</span>
           <h3>Developer Friendly</h3>
           <p>
-            PlatformIO-based build system, 532+ native unit tests with hardware mocks,
+            PlatformIO-based build system, 1,587 passing native unit tests with hardware mocks as of RC9,
             CI/CD via GitHub Actions, CONTRIBUTING.md, and a web flasher for zero-tool
-            firmware installation with browser-side SHA-256 verification. Everything is GPL-3.0 and open for contributions.
+            firmware installation with browser-side SHA-256 verification. Project-authored code is
+            GPL-3.0-only and open for contributions.
           </p>
         </div>
 
@@ -735,7 +737,7 @@
     <div class="container">
       <h2>On-Device Screens</h2>
       <p class="section__intro">
-        18 screens across the full mesh experience. Here's a look at the main ones.
+        More than 22 screens and views across the full mesh experience. Here's a look at the main ones.
       </p>
       <div class="screenshot-grid">
         <div class="screenshot-grid__item">
@@ -808,7 +810,8 @@
             <li><span class="label">UI Framework</span><span class="value">LVGL v9</span></li>
             <li><span class="label">Display Driver</span><span class="value">LovyanGFX</span></li>
             <li><span class="label">Mesh Stack</span><span class="value">MeshCore</span></li>
-            <li><span class="label">Encryption</span><span class="value">Ed25519</span></li>
+            <li><span class="label">Identity / signing</span><span class="value">Ed25519</span></li>
+            <li><span class="label">Payload security</span><span class="value">Traffic-dependent (MeshCore)</span></li>
             <li><span class="label">Radio Driver</span><span class="value">RadioLib</span></li>
             <li><span class="label">Font Rendering</span><span class="value">Montserrat + Noto Emoji</span></li>
             <li><span class="label">Persistence</span><span class="value">NVS + SPIFFS</span></li>
@@ -831,15 +834,13 @@
 
         <div class="tl-item">
           <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.44 RC6</div>
-          <div class="tl-item__date">July 12, 2026</div>
+          <div class="tl-item__version">beta-0.1.47-RC9</div>
+          <div class="tl-item__date">August 2, 2026</div>
           <div class="tl-item__desc">
-            <strong>Blockers resolved:</strong> BLE logging SIG_LOG* macros (CI green), auto_del=true screen-loads eliminated (QR, PIN, Home), keyboard locked to CMD 0x04<br>
-            <strong>Storage:</strong> Atomic persistence refactor — identity, contacts, chat, NVS with transaction recovery; dirty-only checkpointing, O(1) file-open lookup<br>
-            <strong>Performance:</strong> PSRAM double-buffered display + DMA flush, 12.8 KB DRAM reclaimed, adaptive touch polling<br>
-            <strong>Mesh/HW:</strong> Companion BLE adapter extracted, GT911 crash recovery, deep-sleep GPIO guard, SPI FSPI fallback<br>
-            <strong>Security:</strong> OTA PIN brute-force limit, companion PIN range aligned<br>
-            <strong>CI/Docs:</strong> ASan/UBSan + static-analysis gates, artifact docs, command support matrix
+            <strong>Audit fixes:</strong> 25 security, data-integrity, concurrency, radio/map, and build-infrastructure fixes plus review follow-ups<br>
+            <strong>Reliability:</strong> Diagnostic serial I/O moved outside the ESP32 critical section, SPIFFS remount recovery, and capped OTA state-save retries<br>
+            <strong>Supply chain:</strong> SBOM coverage for URL-based PlatformIO requirements and pinned GitHub Actions updates<br>
+            <strong>Verification:</strong> 1,587 native tests passed, 1 skipped; CI green
           </div>
         </div>
 
@@ -904,14 +905,14 @@
     </div>
   </section>
 
-  <!-- ═══ Map Tiles (Alpha) ═══════════════════ -->
+  <!-- ═══ Map Preview (Alpha) ═══════════════════ -->
   <section class="section" id="tiles">
     <div class="container">
-      <h2>Map Tiles <span style="font-family:'Pixelify Sans',sans-serif;font-size:14px;color:var(--accent-orange);vertical-align:middle;">ALPHA</span></h2>
+      <h2>Map Preview <span style="font-family:'Pixelify Sans',sans-serif;font-size:14px;color:var(--accent-orange);vertical-align:middle;">ALPHA</span></h2>
       <p class="section__intro">
-        SigurdOS supports offline tile maps on the T-Deck. Generate tiles right in your browser
-        and download them as a zip &mdash; no Python scripts, no server-side processing.
-        Just pan to your area, select zoom levels, and download.
+        SigurdOS supports offline PNG tile maps on the T-Deck. Use this interactive preview to
+        inspect an area. It requests only tiles needed for the visible viewport; it does not build
+        offline archives from community tile services.
       </p>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:28px;">
@@ -920,80 +921,50 @@
           <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">SD Card Path</div>
           <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
             Copy the extracted <code style="background:#1A1A1A;color:var(--accent);padding:2px 6px;font-family:'JetBrains Mono',monospace;">tiles/</code> folder to the root of your
-            T-Deck's SD card. Structure: <code style="background:#1A1A1A;color:var(--accent);padding:2px 6px;font-family:'JetBrains Mono',monospace;">tiles/zoom/x/y.jpg</code>.
-            This also works with Ripple firmware tiles.
+            T-Deck's SD card. Structure: <code style="background:#1A1A1A;color:var(--accent);padding:2px 6px;font-family:'JetBrains Mono',monospace;">tiles/&lt;z&gt;/&lt;x&gt;/&lt;y&gt;.png</code>.
           </p>
         </div>
 
         <div style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">Zoom Levels</div>
+          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">Offline Sources</div>
           <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
-            Higher zoom = more detail but more tiles. A single zoom 10 tile covers ~38km&sup2;,
-            zoom 14 covers ~2.5km&sup2;. For an average city, zooms 10&ndash;14 give a good
-            balance of detail and file size. Each tile is 256&times;256 PNG.
+            OpenStreetMap's standard tile service does not permit offline downloads or ZIP
+            prefetching. Build packages from self-hosted tiles or a provider whose terms explicitly
+            allow offline use.
           </p>
         </div>
 
         <div style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">Data Usage</div>
+          <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-bottom:8px;">Attribution</div>
           <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">
-            Tiles are downloaded from OpenStreetMap's tile servers. For a city-sized area:
-            zooms 10&ndash;14 = ~10&ndash;50 MB. Zooms 10&ndash;16 = ~50&ndash;200 MB.
-            Each tile is ~10&ndash;50 KB. Generate on WiFi before heading out.
+            Provider and OpenStreetMap contributor attribution remains visible on the map. Offline
+            packages must also retain all attribution and licensing required by their source.
           </p>
         </div>
 
       </div>
 
       <div id="tile-tool" style="background:var(--bg-card);border:var(--border-w) solid var(--divider);padding:24px;">
-        <h3 style="margin-bottom:16px;">Tile Generator</h3>
+        <h3 style="margin-bottom:16px;">Interactive Map</h3>
 
         <div style="margin-bottom:14px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;">
           <div>
-            <label style="font-size:12px;color:var(--text-secondary);display:block;margin-bottom:2px;">Min Zoom</label>
-            <select id="tile-minzoom" style="background:#1A1A1A;color:#EAEAEA;border:2px solid #222;padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;">
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10" selected>10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:12px;color:var(--text-secondary);display:block;margin-bottom:2px;">Max Zoom</label>
-            <select id="tile-maxzoom" style="background:#1A1A1A;color:#EAEAEA;border:2px solid #222;padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;">
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14" selected>14</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-              <option value="17">17</option>
-            </select>
-          </div>
-          <div>
-            <button id="tile-download-btn" class="btn" style="font-size:9px;padding:8px 16px;">Download Current View</button>
-          </div>
-          <div>
             <button id="tile-style-btn" class="btn btn--outline" style="font-size:9px;padding:8px 16px;min-width:90px;">&#x2600; Light</button>
           </div>
-          <div id="tile-estimate" style="font-size:12px;color:var(--text-muted);"></div>
         </div>
 
         <div id="tile-map" style="height:400px;border:var(--border-w) solid var(--divider);"></div>
-        <div id="tile-progress" style="margin-top:12px;font-size:12px;color:var(--text-secondary);display:none;"></div>
         <p style="margin-top:10px;font-size:11px;color:var(--text-muted);">
-          Pan and zoom to your area of interest, then click &ldquo;Download Current View&rdquo;.
-          The tool downloads tiles from OpenStreetMap for the visible area at the selected zoom range.
+          Pan and zoom to inspect an area. Only the tiles visible in the map are requested.
         </p>
       </div>
     </div>
   </section>
 
   <!-- Leaflet CSS + JS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"
+        crossorigin="anonymous">
   <style>
     #tile-map .leaflet-container { background: #0A0A0A; }
     .leaflet-control-zoom a { background: #1A1A1A !important; color: #00BFFF !important; border-color: #222 !important; }
@@ -1028,14 +999,14 @@
       <a href="https://flasher.sigurdos.dev" class="btn">Flash Your Device</a>
       <a href="https://github.com/hermes-gadget/SigurdOS-tdeck/blob/dev/CONTRIBUTING.md" class="btn btn--outline" target="_blank">Contribute</a>
       <p class="footnote">
-        Everything is open source. GPL-3.0 licensed.
+        Site code is GPL-3.0-only. Third-party components retain their own licences and terms.
         Built for the mesh community.
       </p>
     </div>
   </div>
 
   <!-- ═══ Back to Top ═══════════════════════ -->
-  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#x2191;</button>
+  <button id="back-to-top" aria-label="Back to top">&#x2191;</button>
 
   <!-- ═══ Footer ════════════════════════════ -->
   <footer class="footer">
@@ -1054,234 +1025,10 @@
     </div>
   </footer>
 
-<script>
-// Back-to-top button visibility
-const btt = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => {
-  btt.classList.toggle('visible', window.scrollY > 300);
-});
-
-// Auto-update version tag + contributors from GitHub
-(async function() {
-  const owner = 'hermes-gadget', repo = 'SigurdOS-tdeck';
-  try {
-    const vr = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases?per_page=1`);
-    const releases = await vr.json();
-    if (releases && releases[0]) {
-      document.getElementById('version-text').textContent = releases[0].tag_name;
-    }
-  } catch(e) { /* fallback */ }
-
-  try {
-    // Contributors
-    const cr = await fetch(`https://api.github.com/repos/${owner}/${repo}/contributors`);
-    const contributors = await cr.json();
-    const grid = document.getElementById('contributors-grid');
-    if (contributors && contributors.length) {
-      grid.innerHTML = contributors.map(c => `
-        <a href="${c.html_url}" target="_blank" class="contributor">
-          <img src="${c.avatar_url}&s=48" alt="${c.login}" class="contributor__avatar" width="48" height="48" loading="lazy">
-          <span class="contributor__name">${c.login}</span>
-          <span class="contributor__commits">${c.contributions} commit${c.contributions !== 1 ? 's' : ''}</span>
-        </a>
-      `).join('');
-    } else {
-      grid.innerHTML = '<div style="color:var(--text-muted);font-size:14px;">No contributors yet</div>';
-    }
-  } catch(e) {
-    document.getElementById('contributors-grid').innerHTML =
-      '<div style="color:var(--text-muted);font-size:14px;">Could not load contributors</div>';
-  }
-})();
-</script>
-
-<script>
-// Hamburger menu toggle
-(function() {
-  var btn = document.getElementById('hamburger');
-  var nav = document.getElementById('mobileNav');
-  if (!btn || !nav) return;
-  btn.addEventListener('click', function() {
-    btn.classList.toggle('active');
-    nav.classList.toggle('open');
-  });
-  nav.addEventListener('click', function(e) {
-    if (e.target.tagName === 'A') {
-      btn.classList.remove('active');
-      nav.classList.remove('open');
-    }
-  });
-  document.addEventListener('click', function(e) {
-    if (!btn.contains(e.target) && !nav.contains(e.target)) {
-      btn.classList.remove('active');
-      nav.classList.remove('open');
-    }
-  });
-})();
-</script>
-
-<!-- Tile Generator: Leaflet + JSZip -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin></script>
-<script>
-(function() {
-  const mapEl = document.getElementById('tile-map');
-  if (!mapEl) return;
-
-  const proxyBase = '/api/tile';
-  const minZoomSel = document.getElementById('tile-minzoom');
-  const maxZoomSel = document.getElementById('tile-maxzoom');
-  const downloadBtn = document.getElementById('tile-download-btn');
-  const styleBtn = document.getElementById('tile-style-btn');
-  const estimateEl = document.getElementById('tile-estimate');
-  const progressEl = document.getElementById('tile-progress');
-
-  var tileStyle = 'light';
-  var lightLayer, darkLayer;
-
-  // Init map
-  const map = L.map(mapEl, {
-    center: [51.5, -0.13],
-    zoom: 6,
-    zoomControl: true,
-    attributionControl: false,
-  });
-  lightLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-  }).addTo(map);
-  darkLayer = L.tileLayer('https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-  });
-
-  // Style toggle
-  styleBtn.addEventListener('click', function() {
-    if (tileStyle === 'light') {
-      tileStyle = 'dark';
-      map.removeLayer(lightLayer);
-      map.addLayer(darkLayer);
-      styleBtn.innerHTML = '&#x1F319; Dark';
-    } else {
-      tileStyle = 'light';
-      map.removeLayer(darkLayer);
-      map.addLayer(lightLayer);
-      styleBtn.innerHTML = '&#x2600; Light';
-    }
-  });
-
-  // Update estimate on map move or zoom change
-  map.on('moveend', updateEstimate);
-  minZoomSel.addEventListener('change', updateEstimate);
-  maxZoomSel.addEventListener('change', updateEstimate);
-
-  function latLonToTile(latlng, z) {
-    var n = Math.pow(2, z);
-    var x = Math.floor((latlng.lng + 180) / 360 * n);
-    var latRad = latlng.lat * Math.PI / 180;
-    var y = Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n);
-    return { x: x, y: y };
-  }
-
-  function updateEstimate() {
-    var bounds = map.getBounds();
-    var minZ = parseInt(minZoomSel.value);
-    var maxZ = parseInt(maxZoomSel.value);
-    var total = 0;
-    for (var z = minZ; z <= maxZ; z++) {
-      var sw = latLonToTile(bounds.getSouthWest(), z);
-      var ne = latLonToTile(bounds.getNorthEast(), z);
-      var tx = Math.abs(ne.x - sw.x) + 1;
-      var ty = Math.abs(ne.y - sw.y) + 1;
-      total += tx * ty;
-    }
-    var estSizeKB = total * 25;
-    var estSize = estSizeKB > 1024 ? (estSizeKB / 1024).toFixed(1) + ' MB' : estSizeKB + ' KB';
-    estimateEl.textContent = '~' + total + ' tiles (~' + estSize + ')';
-  }
-
-  // Initial estimate
-  updateEstimate();
-
-  // Download button
-  downloadBtn.addEventListener('click', function() {
-    var bounds = map.getBounds();
-    var minZ = parseInt(minZoomSel.value);
-    var maxZ = parseInt(maxZoomSel.value);
-
-    downloadBtn.disabled = true;
-    downloadBtn.textContent = 'Downloading...';
-    progressEl.style.display = 'block';
-
-    // Calculate all tiles needed
-    var tileList = [];
-    for (var z = minZ; z <= maxZ; z++) {
-      var sw = latLonToTile(bounds.getSouthWest(), z);
-      var ne = latLonToTile(bounds.getNorthEast(), z);
-      var xMin = Math.min(sw.x, ne.x);
-      var xMax = Math.max(sw.x, ne.x);
-      var yMin = Math.min(sw.y, ne.y);
-      var yMax = Math.max(sw.y, ne.y);
-      for (var x = xMin; x <= xMax; x++) {
-        for (var y = yMin; y <= yMax; y++) {
-          tileList.push({ z: z, x: x, y: y });
-        }
-      }
-    }
-
-    var total = tileList.length;
-    var completed = 0;
-    var failed = 0;
-    var activeWorkers = 0;
-    var tileIdx = 0;
-    var zip = new JSZip();
-    var poolSize = 12;
-
-    function worker(t) {
-      var url = proxyBase + '?z=' + t.z + '&x=' + t.x + '&y=' + t.y + '&style=' + tileStyle;
-      fetch(url).then(function(resp) {
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        return resp.blob();
-      }).then(function(blob) {
-        var path = 'tiles/' + t.z + '/' + t.x + '/' + t.y + '.png';
-        zip.file(path, blob);
-        completed++;
-      }).catch(function() {
-        failed++;
-      }).then(function() {
-        activeWorkers--;
-        var done = completed + failed;
-        progressEl.textContent = '' + done + '/' + total + ' tiles (' + failed + ' failed, ' + Math.round(done / total * 100) + '%)';
-        pump();
-      });
-    }
-
-    function pump() {
-      while (tileIdx < total && activeWorkers < poolSize) {
-        activeWorkers++;
-        worker(tileList[tileIdx++]);
-      }
-      if (completed + failed >= total) finish();
-    }
-
-    function finish() {
-      if (failed > 0) progressEl.textContent += ' - ' + failed + ' tiles failed.';
-      progressEl.textContent += ' Creating zip...';
-      zip.generateAsync({ type: 'blob' }).then(function(zipBlob) {
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(zipBlob);
-        a.download = 'sigurdos-tiles-z' + minZ + '-z' + maxZ + '.zip';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(a.href);
-        var sizeStr = zipBlob.size > 1048576 ? (zipBlob.size / 1048576).toFixed(1) + ' MB' : (zipBlob.size / 1024).toFixed(0) + ' KB';
-        progressEl.textContent = 'Done. ' + sizeStr + ' downloaded.';
-        downloadBtn.disabled = false;
-        downloadBtn.textContent = 'Download Current View';
-      });
-    }
-
-    pump();
-  });
-})();
-</script>
+<!-- Leaflet is version-pinned and authenticated with SRI. Site code is local. -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"
+        crossorigin="anonymous"></script>
+<script src="/site.js"></script>
 </body>
+</html>
