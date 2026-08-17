@@ -617,7 +617,7 @@
   <section class="hero">
     <div class="container">
       <h1>SIGURDOS</h1>
-      <p class="version-tag" id="version-tag">v <span id="version-text">beta-0.1.47-RC9</span><span id="version-status" class="metadata-status" role="status" aria-live="polite"></span></p>
+      <p class="version-tag" id="version-tag">v <span id="version-text">beta-0.1.48-RC10</span><span id="version-status" class="metadata-status" role="status" aria-live="polite"></span></p>
       <p class="subtitle">
         A fully open source firmware that turns the LilyGo T-Deck into a
         portable mesh communication device. Chat across your network, navigate
@@ -661,7 +661,7 @@
           <div class="stat-item__label">Screens</div>
         </div>
         <div class="stat-item">
-          <div class="stat-item__num">RC9</div>
+          <div class="stat-item__num">RC10</div>
           <div class="stat-item__label">Release</div>
         </div>
         <div class="stat-item">
@@ -669,7 +669,7 @@
           <div class="stat-item__label">MB Flash</div>
         </div>
         <div class="stat-item">
-          <div class="stat-item__num">1,587</div>
+          <div class="stat-item__num">1,692</div>
           <div class="stat-item__label">Unit Tests</div>
         </div>
         <div class="stat-item">
@@ -677,7 +677,7 @@
           <div class="stat-item__label">Site Code</div>
         </div>
       </div>
-      <p class="stats-as-of">Metrics verified against beta-0.1.47-RC9 — as of August 11, 2026.</p>
+      <p class="stats-as-of">Metrics verified against beta-0.1.48-RC10 — as of August 16, 2026.</p>
     </div>
   </div>
 
@@ -883,19 +883,20 @@
 
         <div class="tl-item">
           <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.47-RC9</div>
-          <div class="tl-item__date">August 2, 2026</div>
+          <div class="tl-item__version">beta-0.1.48-RC10</div>
+          <div class="tl-item__date">August 16, 2026</div>
           <div class="tl-item__desc">
-            <strong>Audit fixes:</strong> 25 security, data-integrity, concurrency, radio/map, and build-infrastructure fixes plus review follow-ups<br>
-            <strong>Reliability:</strong> Diagnostic serial I/O moved outside the ESP32 critical section, SPIFFS remount recovery, and capped OTA state-save retries<br>
-            <strong>Supply chain:</strong> SBOM coverage for URL-based PlatformIO requirements and pinned GitHub Actions updates<br>
-            <strong>Verification:</strong> 1,587 native tests passed, 1 skipped; CI green
+            <strong>CI/release:</strong> Case-insensitive duplicate Launcher asset fix, deduplicated release-provenance subjects, and checksum list aligned to published assets<br>
+            <strong>QR/security:</strong> QR share panic fixed upstream, plus storage, widget lifetime, companion routing, and factory-reset hardening<br>
+            <strong>Reliability:</strong> Soak crash-detection, release-liveness probe, GPS/diagnostic drain ownership, SPIFFS mount guard, and BLE boot markers<br>
+            <strong>Build/test:</strong> 1,692 native tests passed, 2 skipped; full firmware matrix green<br>
+            <strong>Notes:</strong> Intended stable release for this cycle; marked as prerelease on GitHub
           </div>
         </div>
 
         <div class="tl-item">
           <div class="tl-item__dot"></div>
-          <div class="tl-item__version">beta-0.1.43 RC5</div>
+          <div class="tl-item__version">beta-0.1.47 RC9</div>
           <div class="tl-item__date">June 28, 2026</div>
           <div class="tl-item__desc">
             <strong>Companion:</strong> Fixed channel slots + clearing, USB serial transport, per-message delivery tracking, crypto reload, random BLE PIN (per-device)<br>
