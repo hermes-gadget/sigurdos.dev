@@ -11,11 +11,11 @@
   <meta property="og:url" content="https://www.sigurdos.dev/">
   <meta property="og:title" content="SigurdOS — open source mesh networking firmware">
   <meta property="og:description" content="Open source mesh communication firmware for the LilyGo T-Deck and compatible devices.">
-  <meta property="og:image" content="https://www.sigurdos.dev/img/sigurdos-banner.png">
+  <meta property="og:image" content="https://www.sigurdos.dev/img/sigurdos-banner.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="SigurdOS — open source mesh networking firmware">
   <meta name="twitter:description" content="Open source mesh communication firmware for the LilyGo T-Deck and compatible devices.">
-  <meta name="twitter:image" content="https://www.sigurdos.dev/img/sigurdos-banner.png">
+  <meta name="twitter:image" content="https://www.sigurdos.dev/img/sigurdos-banner.jpg">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -608,8 +608,20 @@
   <!-- ═══ Banner ═══════════════════════════════ -->
   <div class="banner">
     <picture>
-      <source srcset="img/sigurdos-banner.webp" type="image/webp">
-      <img src="img/sigurdos-banner.png" alt="SigurdOS mesh networking banner" class="banner-img" width="1916" height="821" decoding="async" fetchpriority="high">
+      <source
+        type="image/webp"
+        srcset="img/sigurdos-banner-640.webp 640w, img/sigurdos-banner-1280.webp 1280w, img/sigurdos-banner.webp 1916w"
+        sizes="100vw">
+      <img
+        src="img/sigurdos-banner.jpg"
+        srcset="img/sigurdos-banner-640.jpg 640w, img/sigurdos-banner-1280.jpg 1280w, img/sigurdos-banner.jpg 1916w"
+        sizes="100vw"
+        alt="SigurdOS mesh networking banner"
+        class="banner-img"
+        width="1916"
+        height="821"
+        decoding="async"
+        fetchpriority="high">
     </picture>
   </div>
 
