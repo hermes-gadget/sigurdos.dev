@@ -116,6 +116,36 @@ class SiteServerTests(unittest.TestCase):
                 status, _, _ = self.request(path)
                 self.assertEqual(status, 200)
 
+    def test_banner_uses_responsive_compressed_assets(self) -> None:
+        status, page, _ = self.request("/")
+        self.assertEqual(status, 200)
+        normalized_page = b" ".join(page.split())
+        self.assertIn(b'type="image/webp"', normalized_page)
+        self.assertIn(b'img/sigurdos-banner-640.webp 640w', normalized_page)
+        self.assertIn(b'img/sigurdos-banner-1280.webp 1280w', normalized_page)
+        self.assertIn(b'img/sigurdos-banner.webp 1916w', normalized_page)
+        self.assertIn(b'img/sigurdos-banner-640.jpg 640w', normalized_page)
+        self.assertIn(b'img/sigurdos-banner-1280.jpg 1280w', normalized_page)
+        self.assertIn(b'sizes="100vw"', normalized_page)
+        self.assertIn(b'width="1916" height="821"', normalized_page)
+
+        for path, content_type, maximum_size in (
+            ("/img/sigurdos-banner-640.webp", "image/webp", 60_000),
+            ("/img/sigurdos-banner-1280.webp", "image/webp", 200_000),
+            ("/img/sigurdos-banner.webp", "image/webp", 350_000),
+            ("/img/sigurdos-banner-640.jpg", "image/jpeg", 130_000),
+            ("/img/sigurdos-banner-1280.jpg", "image/jpeg", 450_000),
+            ("/img/sigurdos-banner.jpg", "image/jpeg", 800_000),
+        ):
+            with self.subTest(path=path):
+                status, body, headers = self.request(path)
+                self.assertEqual(status, 200)
+                self.assertEqual(headers["content-type"], content_type)
+                self.assertLess(len(body), maximum_size)
+
+        status, _, _ = self.request("/img/sigurdos-banner.png")
+        self.assertEqual(status, 404)
+
     def test_legacy_host_redirects_to_canonical_host(self) -> None:
         status, body, headers = self.request(
             "/?source=legacy",
@@ -172,9 +202,9 @@ class SiteServerTests(unittest.TestCase):
     def test_release_and_security_copy_are_current(self) -> None:
         _, body, _ = self.request("/")
         normalized_body = b" ".join(body.split())
-        self.assertIn(b"beta-0.1.47-RC9", body)
-        self.assertIn(b"1,587", body)
-        self.assertIn(b"as of August 11, 2026", body)
+        self.assertIn(b"beta-0.1.48-RC10", body)
+        self.assertIn(b"1,692", body)
+        self.assertIn(b"as of August 16, 2026", body)
         self.assertNotIn(b"SlopOS", body)
         self.assertNotIn(b"beta-0.1.44 RC6", body)
         self.assertNotIn(b"Every packet is encrypted with Ed25519", normalized_body)
@@ -183,7 +213,7 @@ class SiteServerTests(unittest.TestCase):
         self.assertIn(b"do not authenticate an individual sender", normalized_body)
         self.assertIn(b"not every packet is encrypted", normalized_body)
         self.assertIn(b"tiles/&lt;z&gt;/&lt;x&gt;/&lt;y&gt;.png", normalized_body)
-        self.assertNotIn(b".jpg", normalized_body)
+        self.assertNotIn(b"tiles/&lt;z&gt;/&lt;x&gt;/&lt;y&gt;.jpg", normalized_body)
         _, javascript, _ = self.request("/site.js")
         self.assertNotIn(b"innerHTML", javascript)
 
