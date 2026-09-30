@@ -36,9 +36,6 @@ PUBLIC_FILES = {
     "/img/sigurdos-banner.webp": PUBLIC_ROOT / "img/sigurdos-banner.webp",
     "/img/home.png": PUBLIC_ROOT / "img/home.png",
     "/img/terminal.png": PUBLIC_ROOT / "img/terminal.png",
-    "/hermes-gmail/": PUBLIC_ROOT / "hermes-gmail/index.html",
-    "/hermes-gmail/index.html": PUBLIC_ROOT / "hermes-gmail/index.html",
-    "/hermes-gmail/privacy.html": PUBLIC_ROOT / "hermes-gmail/privacy.html",
 }
 
 CONTENT_SECURITY_POLICY = "; ".join(
